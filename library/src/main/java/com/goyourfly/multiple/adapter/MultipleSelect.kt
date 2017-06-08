@@ -38,9 +38,14 @@ object MultipleSelect {
         private var defaultControl = true
 
         /**
+         * 默认控制条的背景色
+         */
+        private var controlBgColor = 0xFF3F51B5.toInt();
+
+        /**
          * 状态回调
          */
-        private var stateChangeListener:StateChangeListener? = null
+        private var stateChangeListener: StateChangeListener? = null
 
         /**
          * 动画时长
@@ -50,11 +55,13 @@ object MultipleSelect {
         class MultipleSelectColorBuilder(activity: Activity,
                                          adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?,
                                          defaultControl: Boolean,
+                                         controlBgColor: Int,
                                          stateChangeListener: StateChangeListener?) : MultipleSelectBuilder(activity) {
             init {
                 super.adapter = adapter
                 super.selectStyle = Style.COLOR
                 super.defaultControl = defaultControl
+                super.controlBgColor = controlBgColor
                 super.stateChangeListener = stateChangeListener
             }
 
@@ -80,12 +87,14 @@ object MultipleSelect {
 
         class MultipleSelectViewBuilder(activity: Activity,
                                         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?,
-                                        defaultControl:Boolean,
+                                        defaultControl: Boolean,
+                                        controlBgColor: Int,
                                         stateChangeListener: StateChangeListener?) : MultipleSelectBuilder(activity) {
             init {
                 super.adapter = adapter
                 super.selectStyle = Style.VIEW
                 super.defaultControl = defaultControl
+                super.controlBgColor = controlBgColor
                 super.stateChangeListener = stateChangeListener
             }
 
@@ -119,25 +128,30 @@ object MultipleSelect {
         }
 
         fun colorStyle(): MultipleSelectColorBuilder {
-            return MultipleSelectColorBuilder(activity, adapter,defaultControl,stateChangeListener)
+            return MultipleSelectColorBuilder(activity, adapter, defaultControl, controlBgColor, stateChangeListener)
         }
 
         fun viewStyle(): MultipleSelectViewBuilder {
-            return MultipleSelectViewBuilder(activity, adapter,defaultControl,stateChangeListener)
+            return MultipleSelectViewBuilder(activity, adapter, defaultControl, controlBgColor, stateChangeListener)
         }
 
 
-        fun withControl(use: Boolean):MultipleSelectBuilder{
+        fun withControl(use: Boolean): MultipleSelectBuilder {
             this.defaultControl = use
             return this
         }
 
-        fun stateChangeListener(listener: StateChangeListener):MultipleSelectBuilder{
+        fun controlColor(color:Int):MultipleSelectBuilder{
+            this.controlBgColor = color
+            return this
+        }
+
+        fun stateChangeListener(listener: StateChangeListener): MultipleSelectBuilder {
             this.stateChangeListener = listener
             return this
         }
 
-        fun build(): RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        fun build(): MultipleAdapter {
             if (adapter == null)
                 throw NullPointerException("You must specific the adapter")
 
@@ -147,13 +161,13 @@ object MultipleSelect {
                 decorate = ColorViewHolderDecorate(builder.selectId, builder.defaultColor, builder.selectColor)
             } else if (selectStyle == Style.VIEW) {
                 val builder = this as MultipleSelectViewBuilder
-                decorate = ExpandViewHolderDecorate(activity, builder.defaultViewLayout, builder.selectViewLayout,builder.gravity,duration)
+                decorate = ExpandViewHolderDecorate(activity, builder.defaultViewLayout, builder.selectViewLayout, builder.gravity, duration)
             }
-            var control:DefaultPopupToolbar? = null
-            if(defaultControl){
-                control = DefaultPopupToolbar(activity)
+            var control: DefaultPopupToolbar? = null
+            if (defaultControl) {
+                control = DefaultPopupToolbar(activity,controlBgColor)
             }
-            return MultipleAdapter(activity, adapter!!,stateChangeListener, control,decorate!!, duration)
+            return MultipleAdapter(activity, adapter!!, stateChangeListener, control, decorate!!, duration)
         }
 
     }

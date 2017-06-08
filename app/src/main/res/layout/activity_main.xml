@@ -5,18 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="com.goyourfly.multiselectadapter.MainActivity">
 
     <Button
         android:id="@+id/style1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Style1" />
+        android:text="DEMO1" />
 
     <Button
+        android:layout_marginTop="16dp"
         android:id="@+id/style2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Style2" />
+        android:text="DEMO2" />
+    <Button
+        android:layout_marginTop="16dp"
+        android:id="@+id/style3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DEMO3" />
 
 </LinearLayout>

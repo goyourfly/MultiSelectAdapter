@@ -1,5 +1,6 @@
 package com.goyourfly.multiselectadapter
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.goyourfly.multiple.adapter.Gravity
@@ -15,6 +16,7 @@ class EmailActivity : RecyclerActivity() {
                 .with(this)
                 .adapter(EmailAdapter())
                 .viewStyle()
+                .controlColor(Color.BLACK)
                 .build()
 
         val p:PopupToolView

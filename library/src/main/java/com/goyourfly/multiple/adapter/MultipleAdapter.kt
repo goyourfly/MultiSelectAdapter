@@ -34,7 +34,7 @@ class MultipleAdapter(val activity: Activity,
             }
         }
 
-        popupToolbar?.callbackDone = object : PopupToolView.CallbackDone{
+        popupToolbar?.callbackDone = object : PopupToolView.CallbackDone {
             override fun doneClick() {
                 done()
             }
@@ -80,50 +80,48 @@ class MultipleAdapter(val activity: Activity,
         selectIndex.put(position, !selectIndex[position])
         selectNum += if (selectIndex[position]) 1 else -1
         popupToolbar?.numChanged(selectNum)
-        if(selectIndex[position]) {
-            stateChangeListener?.onSelect(position,selectNum)
-        }else{
-            stateChangeListener?.onUnSelect(position,selectNum)
+        if (selectIndex[position]) {
+            stateChangeListener?.onSelect(position, selectNum)
+        } else {
+            stateChangeListener?.onUnSelect(position, selectNum)
         }
         if (selectNum <= 0) {
-           cancel()
+            cancel()
         } else {
             notifyItemChanged(position)
         }
     }
 
-    fun selectMode(){
+    fun selectMode(refresh: Boolean = true) {
         selectNum = 1
         showState = ShowState.DEFAULT_TO_SELECT
         popupToolbar?.show()
         popupToolbar?.numChanged(selectNum)
         stateChangeListener?.onSelectMode()
+        if(refresh)
+            notifyDataSetChanged()
     }
 
-    fun done(){
-        if(showState == ShowState.DEFAULT)
+    fun done(refresh: Boolean = true) {
+        if (showState == ShowState.DEFAULT)
             return
         showState = ShowState.SELECT_TO_DEFAULT
         popupToolbar?.dismiss()
-        notifyDataSetChanged()
+        if (refresh)
+            notifyDataSetChanged()
         handler.postDelayed(run, duration)
-        val list = arrayListOf<Int>()
-        for (i in 0..selectIndex.size() - 1){
-            if(selectIndex[i]){
-                list.add(i)
-            }
-        }
-        stateChangeListener?.onDone(list)
+        stateChangeListener?.onDone(getSelectIndex())
         selectIndex.clear()
     }
 
 
-    fun cancel() :Boolean{
-        if(showState == ShowState.DEFAULT)
+    fun cancel(refresh: Boolean = true): Boolean {
+        if (showState == ShowState.DEFAULT)
             return false
         showState = ShowState.SELECT_TO_DEFAULT
         popupToolbar?.dismiss()
-        notifyDataSetChanged()
+        if (refresh)
+            notifyDataSetChanged()
         handler.postDelayed(run, duration)
         selectIndex.clear()
         stateChangeListener?.onCancel()
@@ -131,12 +129,22 @@ class MultipleAdapter(val activity: Activity,
     }
 
 
+    fun getSelectIndex(): ArrayList<Int> {
+        val list = arrayListOf<Int>()
+        for (i in 0..selectIndex.size() - 1) {
+            if (selectIndex[i]) {
+                list.add(i)
+            }
+        }
+        return list
+    }
+
     fun onItemLongClick(position: Int): Boolean {
         selectIndex.clear()
         if (showState == ShowState.DEFAULT) {
-            selectMode()
+            selectMode(false)
             selectIndex.put(position, true)
-            stateChangeListener?.onSelect(position,selectNum)
+            stateChangeListener?.onSelect(position, selectNum)
         } else if (showState == ShowState.SELECT) {
             selectNum = 0
             cancel()

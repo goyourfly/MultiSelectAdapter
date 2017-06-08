@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".EmailActivity" />
         <activity android:name=".EmailActivity2" />
+        <activity android:name=".EmailActivity3" />
     </application>
 
 </manifest>

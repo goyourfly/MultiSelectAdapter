@@ -18,6 +18,10 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.style2).setOnClickListener {
             startActivity(Intent(it.context, EmailActivity2::class.java))
         }
+
+        findViewById(R.id.style3).setOnClickListener {
+            startActivity(Intent(it.context, EmailActivity3::class.java))
+        }
     }
 
 }

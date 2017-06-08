@@ -9,7 +9,7 @@ import com.goyourfly.multiple.adapter.R
 /**
  * Created by gaoyufei on 2017/6/8.
  */
-class DefaultPopupToolbar(activity: Activity): PopupToolView(activity){
+class DefaultPopupToolbar(activity: Activity,val color:Int): PopupToolView(activity){
     var toolbar = Toolbar(activity)
 
     fun setTitle(title:String){
@@ -22,7 +22,7 @@ class DefaultPopupToolbar(activity: Activity): PopupToolView(activity){
 
     override fun getToolView(): View {
         toolbar = Toolbar(activity)
-        toolbar.setBackgroundColor(0xFF3F51B5.toInt())
+        toolbar.setBackgroundColor(color)
         toolbar.setTitleTextColor(Color.WHITE)
         toolbar.navigationIcon = activity.resources.getDrawable(R.drawable.ic_arrow_back)
         toolbar.inflateMenu(R.menu.menu_multiple_select)
