@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MultiSelectAdapter</string>
+    <string name="title_activity_recycler">RecyclerActivity</string>
+</resources>

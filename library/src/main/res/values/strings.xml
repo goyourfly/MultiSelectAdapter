@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="delete">Delete</string>
+    <string name="done">Done</string>
+</resources>
