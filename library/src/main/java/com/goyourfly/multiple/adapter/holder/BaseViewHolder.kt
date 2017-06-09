@@ -11,9 +11,9 @@ import com.goyourfly.multiple.adapter.ShowState
 /**
  * Created by gaoyufei on 2017/6/8.
  */
-abstract class MultipleViewHolder(val view: View,
-                                  val viewHolder: RecyclerView.ViewHolder,
-                                  val adapter: MultipleAdapter) : RecyclerView.ViewHolder(view) {
+abstract class BaseViewHolder(val view: View,
+                              val viewHolder: RecyclerView.ViewHolder,
+                              val adapter: MultipleAdapter) : RecyclerView.ViewHolder(view) {
 
     init {
         viewHolder.itemView.setOnTouchListener(OnTouchListener(adapter, this))

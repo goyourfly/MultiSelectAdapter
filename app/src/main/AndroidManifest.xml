@@ -16,9 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EmailActivity" />
-        <activity android:name=".EmailActivity2" />
-        <activity android:name=".EmailActivity3" />
+        <activity android:name=".Demo1Activity" />
+        <activity android:name=".Demo2Activity" />
+        <activity android:name=".Demo3Activity" />
+        <activity android:name=".Demo4Activity" />
     </application>
 
 </manifest>

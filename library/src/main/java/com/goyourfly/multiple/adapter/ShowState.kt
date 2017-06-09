@@ -8,11 +8,4 @@ object ShowState {
     val DEFAULT_TO_SELECT = 2
     val SELECT = 3
     val SELECT_TO_DEFAULT = 4
-
-    fun getNextState(fromState: Int): Int {
-        var toState = fromState + 1
-        if (toState > SELECT_TO_DEFAULT)
-            toState = DEFAULT
-        return toState
-    }
 }

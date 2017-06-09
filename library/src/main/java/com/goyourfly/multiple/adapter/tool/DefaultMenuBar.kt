@@ -9,7 +9,7 @@ import com.goyourfly.multiple.adapter.R
 /**
  * Created by gaoyufei on 2017/6/8.
  */
-class DefaultPopupToolbar(activity: Activity,val color:Int): PopupToolView(activity){
+class DefaultMenuBar(activity: Activity, val color:Int): MenuBar(activity){
     var toolbar = Toolbar(activity)
 
     fun setTitle(title:String){
@@ -20,7 +20,7 @@ class DefaultPopupToolbar(activity: Activity,val color:Int): PopupToolView(activ
         setTitle("Select num:${num}")
     }
 
-    override fun getToolView(): View {
+    override fun getContentView(): View {
         toolbar = Toolbar(activity)
         toolbar.setBackgroundColor(color)
         toolbar.setTitleTextColor(Color.WHITE)
@@ -28,13 +28,13 @@ class DefaultPopupToolbar(activity: Activity,val color:Int): PopupToolView(activ
         toolbar.inflateMenu(R.menu.menu_multiple_select)
         toolbar.setNavigationOnClickListener {
             dismiss()
-            callbackCancle?.cancelClick()
+            controler?.cancel()
         }
         toolbar.setOnMenuItemClickListener({
             when(it.itemId){
                 R.id.action_done ->{
                     dismiss()
-                    callbackDone?.doneClick()
+                    controler?.done()
                 }
             }
             true

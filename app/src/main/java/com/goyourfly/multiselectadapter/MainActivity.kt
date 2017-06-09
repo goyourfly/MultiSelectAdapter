@@ -11,16 +11,20 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        findViewById(R.id.style1).setOnClickListener {
-            startActivity(Intent(it.context, EmailActivity::class.java))
+        findViewById(R.id.demo_1).setOnClickListener {
+            startActivity(Intent(it.context, Demo1Activity::class.java))
         }
 
-        findViewById(R.id.style2).setOnClickListener {
-            startActivity(Intent(it.context, EmailActivity2::class.java))
+        findViewById(R.id.demo_2).setOnClickListener {
+            startActivity(Intent(it.context, Demo2Activity::class.java))
         }
 
-        findViewById(R.id.style3).setOnClickListener {
-            startActivity(Intent(it.context, EmailActivity3::class.java))
+        findViewById(R.id.demo_3).setOnClickListener {
+            startActivity(Intent(it.context, Demo3Activity::class.java))
+        }
+
+        findViewById(R.id.demo_4).setOnClickListener {
+            startActivity(Intent(it.context, Demo4Activity::class.java))
         }
     }
 

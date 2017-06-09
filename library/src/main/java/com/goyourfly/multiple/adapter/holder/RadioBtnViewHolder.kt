@@ -13,14 +13,14 @@ import com.goyourfly.multiple.adapter.ShowState
 /**
  * Created by gaoyufei on 2017/6/8.
  */
-class ExpandViewHolder(view: View,
-                       viewHolder: RecyclerView.ViewHolder,
-                       adapter: MultipleAdapter,
-                       val selectViewContainer: View,
-                       val selectView: View,
-                       val unSelectView: View,
-                       val gravity:Int,
-                       val duration:Long) : MultipleViewHolder(view, viewHolder, adapter) {
+class RadioBtnViewHolder(view: View,
+                         viewHolder: RecyclerView.ViewHolder,
+                         adapter: MultipleAdapter,
+                         val selectViewContainer: View,
+                         val selectView: View,
+                         val unSelectView: View,
+                         val gravity:Int,
+                         val duration:Long) : BaseViewHolder(view, viewHolder, adapter) {
 
 
     override fun selectStateChanged(state: Int) {

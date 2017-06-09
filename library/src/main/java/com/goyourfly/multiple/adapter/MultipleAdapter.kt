@@ -7,10 +7,10 @@ import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.util.TypedValue
 import android.view.ViewGroup
-import com.goyourfly.multiple.adapter.holder.MultipleViewHolder
-import com.goyourfly.multiple.adapter.holder.ViewHolderDecorate
-import com.goyourfly.multiple.adapter.tool.DefaultPopupToolbar
-import com.goyourfly.multiple.adapter.tool.PopupToolView
+import com.goyourfly.multiple.adapter.holder.BaseViewHolder
+import com.goyourfly.multiple.adapter.holder.DecorateFactory
+import com.goyourfly.multiple.adapter.tool.ModeControl
+import com.goyourfly.multiple.adapter.tool.MenuBar
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -19,26 +19,17 @@ import com.goyourfly.multiple.adapter.tool.PopupToolView
 class MultipleAdapter(val activity: Activity,
                       val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
                       val stateChangeListener: StateChangeListener?,
-                      val popupToolbar: DefaultPopupToolbar?,
-                      val viewHolderDecorate: ViewHolderDecorate,
-                      val duration: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                      val popupToolbar: MenuBar?,
+                      val decorateFactory: DecorateFactory,
+                      val duration: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ModeControl {
+
     var showState = ShowState.DEFAULT
     val selectIndex = SparseBooleanArray()
     var selectNum = 0
     var handler = Handler()
 
     init {
-        popupToolbar?.callbackCancle = object : PopupToolView.CallbackCancel {
-            override fun cancelClick() {
-                cancel()
-            }
-        }
-
-        popupToolbar?.callbackDone = object : PopupToolView.CallbackDone {
-            override fun doneClick() {
-                done()
-            }
-        }
+        popupToolbar?.initControl(this)
     }
 
     var run = Runnable {
@@ -50,7 +41,7 @@ class MultipleAdapter(val activity: Activity,
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        val holder = viewHolder as MultipleViewHolder
+        val holder = viewHolder as BaseViewHolder
         /**
          * 先调用外界的绑定ViewHolder
          */
@@ -67,7 +58,7 @@ class MultipleAdapter(val activity: Activity,
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): RecyclerView.ViewHolder {
         val outerHolder = adapter.onCreateViewHolder(viewGroup, position)
-        return viewHolderDecorate.decorate(outerHolder, this)
+        return decorateFactory.decorate(outerHolder, this)
     }
 
     override fun getItemCount(): Int {
@@ -92,7 +83,12 @@ class MultipleAdapter(val activity: Activity,
         }
     }
 
-    fun selectMode(refresh: Boolean = true) {
+
+    override fun refresh(){
+        notifyDataSetChanged()
+    }
+
+    override fun selectMode(refresh: Boolean) {
         selectNum = 1
         showState = ShowState.DEFAULT_TO_SELECT
         popupToolbar?.show()
@@ -102,7 +98,11 @@ class MultipleAdapter(val activity: Activity,
             notifyDataSetChanged()
     }
 
-    fun done(refresh: Boolean = true) {
+    override fun getTotal(): Int {
+        return itemCount
+    }
+
+    override fun done(refresh: Boolean) {
         if (showState == ShowState.DEFAULT)
             return
         showState = ShowState.SELECT_TO_DEFAULT
@@ -114,8 +114,11 @@ class MultipleAdapter(val activity: Activity,
         selectIndex.clear()
     }
 
+    override fun getSelect(): ArrayList<Int> {
+        return getSelectIndex()
+    }
 
-    fun cancel(refresh: Boolean = true): Boolean {
+    override fun cancel(refresh: Boolean): Boolean {
         if (showState == ShowState.DEFAULT)
             return false
         showState = ShowState.SELECT_TO_DEFAULT

@@ -1,12 +1,11 @@
 package com.goyourfly.multiple.adapter
 
 import android.app.Activity
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
-import com.goyourfly.multiple.adapter.holder.ColorViewHolderDecorate
-import com.goyourfly.multiple.adapter.holder.ExpandViewHolderDecorate
-import com.goyourfly.multiple.adapter.holder.ViewHolderDecorate
-import com.goyourfly.multiple.adapter.tool.DefaultPopupToolbar
+import com.goyourfly.multiple.adapter.holder.RadioBtnDecorateFactory
+import com.goyourfly.multiple.adapter.holder.DecorateFactory
+import com.goyourfly.multiple.adapter.tool.DefaultMenuBar
+import com.goyourfly.multiple.adapter.tool.MenuBar
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -14,33 +13,26 @@ import com.goyourfly.multiple.adapter.tool.DefaultPopupToolbar
 object MultipleSelect {
 
     @JvmStatic
-    fun with(activity: Activity): MultipleSelectBuilder {
-        return MultipleSelectBuilder(activity)
+    fun with(activity: Activity): Builder {
+        return Builder(activity)
     }
 
 
-    open class MultipleSelectBuilder(val activity: Activity) {
+    open class Builder(val activity: Activity) {
 
         /**
          * 用户的Adapter
          */
-        var adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+        var adapter: RecyclerView.Adapter<in RecyclerView.ViewHolder>? = null
 
 
         /**
-         * 选择中风格，切换颜色和显示选中按钮
+         * 选择中风格，默认给出两种风格
          */
-        private var selectStyle = Style.COLOR
+        private var decorateFactory: DecorateFactory? = null
 
-        /**
-         * 是否使用默认控制条
-         */
-        private var defaultControl = true
 
-        /**
-         * 默认控制条的背景色
-         */
-        private var controlBgColor = 0xFF3F51B5.toInt();
+        private var customMenu: MenuBar? = null
 
         /**
          * 状态回调
@@ -52,101 +44,24 @@ object MultipleSelect {
          */
         var duration = 300L
 
-        class MultipleSelectColorBuilder(activity: Activity,
-                                         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?,
-                                         defaultControl: Boolean,
-                                         controlBgColor: Int,
-                                         stateChangeListener: StateChangeListener?) : MultipleSelectBuilder(activity) {
-            init {
-                super.adapter = adapter
-                super.selectStyle = Style.COLOR
-                super.defaultControl = defaultControl
-                super.controlBgColor = controlBgColor
-                super.stateChangeListener = stateChangeListener
-            }
 
-            var selectId = 0
-            var defaultColor = Color.WHITE
-            var selectColor = 0xFFE0E0E0.toInt()
-
-            fun selectId(id: Int): MultipleSelectColorBuilder {
-                this.selectId = id
-                return this
-            }
-
-            fun defaultColor(color: Int): MultipleSelectColorBuilder {
-                this.defaultColor = color
-                return this
-            }
-
-            fun selectColor(color: Int): MultipleSelectColorBuilder {
-                this.selectColor = color
-                return this
-            }
-        }
-
-        class MultipleSelectViewBuilder(activity: Activity,
-                                        adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?,
-                                        defaultControl: Boolean,
-                                        controlBgColor: Int,
-                                        stateChangeListener: StateChangeListener?) : MultipleSelectBuilder(activity) {
-            init {
-                super.adapter = adapter
-                super.selectStyle = Style.VIEW
-                super.defaultControl = defaultControl
-                super.controlBgColor = controlBgColor
-                super.stateChangeListener = stateChangeListener
-            }
-
-            var defaultViewLayout = 0
-            var selectViewLayout = 0
-            /**
-             * 如果是View风格，则支持设置位置在左边还是再右边
-             */
-            internal var gravity = Gravity.LEFT
-
-
-            fun defaultView(layout: Int): MultipleSelectViewBuilder {
-                defaultViewLayout = layout
-                return this
-            }
-
-            fun selectView(layout: Int): MultipleSelectViewBuilder {
-                selectViewLayout = layout
-                return this
-            }
-
-//            fun gravity(gravity: Int): MultipleSelectBuilder {
-//                this.gravity = gravity
-//                return this
-//            }
-        }
-
-        fun adapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>): MultipleSelectBuilder {
-            this.adapter = adapter
+        fun adapter(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>): Builder {
+            this.adapter = adapter as RecyclerView.Adapter<in RecyclerView.ViewHolder>
             return this
         }
 
-        fun colorStyle(): MultipleSelectColorBuilder {
-            return MultipleSelectColorBuilder(activity, adapter, defaultControl, controlBgColor, stateChangeListener)
-        }
-
-        fun viewStyle(): MultipleSelectViewBuilder {
-            return MultipleSelectViewBuilder(activity, adapter, defaultControl, controlBgColor, stateChangeListener)
-        }
-
-
-        fun withControl(use: Boolean): MultipleSelectBuilder {
-            this.defaultControl = use
+        fun decorateFactory(decorateFactory: DecorateFactory): Builder {
+            this.decorateFactory = decorateFactory
             return this
         }
 
-        fun controlColor(color:Int):MultipleSelectBuilder{
-            this.controlBgColor = color
+
+        fun customControl(menuBar: MenuBar): Builder {
+            this.customMenu = menuBar
             return this
         }
 
-        fun stateChangeListener(listener: StateChangeListener): MultipleSelectBuilder {
+        fun stateChangeListener(listener: StateChangeListener): Builder {
             this.stateChangeListener = listener
             return this
         }
@@ -155,19 +70,14 @@ object MultipleSelect {
             if (adapter == null)
                 throw NullPointerException("You must specific the adapter")
 
-            var decorate: ViewHolderDecorate? = null
-            if (selectStyle == Style.COLOR) {
-                val builder = this as MultipleSelectColorBuilder
-                decorate = ColorViewHolderDecorate(builder.selectId, builder.defaultColor, builder.selectColor)
-            } else if (selectStyle == Style.VIEW) {
-                val builder = this as MultipleSelectViewBuilder
-                decorate = ExpandViewHolderDecorate(activity, builder.defaultViewLayout, builder.selectViewLayout, builder.gravity, duration)
+            if(decorateFactory == null){
+                decorateFactory = RadioBtnDecorateFactory(duration = this.duration)
             }
-            var control: DefaultPopupToolbar? = null
-            if (defaultControl) {
-                control = DefaultPopupToolbar(activity,controlBgColor)
+
+            if (customMenu == null) {
+                customMenu = DefaultMenuBar(activity,0xFF3F51B5.toInt())
             }
-            return MultipleAdapter(activity, adapter!!, stateChangeListener, control, decorate!!, duration)
+            return MultipleAdapter(activity, adapter!!, stateChangeListener, customMenu, decorateFactory!!, duration)
         }
 
     }
