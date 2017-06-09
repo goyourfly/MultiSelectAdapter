@@ -22,7 +22,7 @@ class MultipleAdapter(val activity: Activity,
                       val popupToolbar: DefaultPopupToolbar?,
                       val viewHolderDecorate: ViewHolderDecorate,
                       val duration: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var showState = SelectState.UN_SELECT
+    var showState = ShowState.DEFAULT
     val selectIndex = SparseBooleanArray()
     var selectNum = 0
     var handler = Handler()
@@ -98,7 +98,7 @@ class MultipleAdapter(val activity: Activity,
         popupToolbar?.show()
         popupToolbar?.numChanged(selectNum)
         stateChangeListener?.onSelectMode()
-        if(refresh)
+        if (refresh)
             notifyDataSetChanged()
     }
 

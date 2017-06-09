@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.goyourfly.multiple.adapter.MultipleAdapter
+import com.goyourfly.multiple.adapter.R
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -67,8 +69,12 @@ class ExpandViewHolderDecorate(val activity: Activity,
      */
     fun generateDefaultSelectView(context: Context): View {
         val root = FrameLayout(context)
-        root.setBackgroundColor(0xFFFF4081.toInt())
-        root.addView(View(context),48F.toPx(context),FrameLayout.LayoutParams.MATCH_PARENT)
+        root.setBackgroundColor(0xFFE0E0E0.toInt())
+        val imageView = ImageView(context)
+        imageView.setImageResource(R.drawable.ic_radio_button_checked_black_24dp)
+        val params = FrameLayout.LayoutParams(48F.toPx(context),FrameLayout.LayoutParams.WRAP_CONTENT)
+        params.gravity = Gravity.CENTER
+        root.addView(imageView,params)
         return root
     }
 
@@ -78,7 +84,11 @@ class ExpandViewHolderDecorate(val activity: Activity,
     fun generateDefaultUnSelectView(context: Context): View {
         val root = FrameLayout(context)
         root.setBackgroundColor(0xFFE0E0E0.toInt())
-        root.addView(View(context),48F.toPx(context),FrameLayout.LayoutParams.MATCH_PARENT)
+        val imageView = ImageView(context)
+        imageView.setImageResource(R.drawable.ic_radio_button_unchecked_black_24dp)
+        val params = FrameLayout.LayoutParams(48F.toPx(context),FrameLayout.LayoutParams.WRAP_CONTENT)
+        params.gravity = Gravity.CENTER
+        root.addView(imageView,params)
         return root
     }
 

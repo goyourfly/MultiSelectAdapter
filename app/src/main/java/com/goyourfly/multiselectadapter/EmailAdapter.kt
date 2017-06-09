@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -43,6 +44,11 @@ class EmailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val position:TextView by lazy {
             view.findViewById(R.id.position) as TextView
+        }
+        init {
+            view.setOnClickListener {
+                Toast.makeText(view.context,"Hello",Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
