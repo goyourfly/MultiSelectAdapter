@@ -46,6 +46,8 @@ abstract class MultipleViewHolder(val view: View,
                     isTouching = true
                     startX = event.x
                     startY = event.y
+                    moveX = startX
+                    moveY = startY
                     startTime = System.currentTimeMillis()
                     handler.postDelayed(run,CLICK_LONG_TIME)
                 }

@@ -47,8 +47,12 @@ class EmailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
         init {
             view.setOnClickListener {
-                Toast.makeText(view.context,"Hello",Toast.LENGTH_LONG).show()
+                Toast.makeText(view.context,"Hello",Toast.LENGTH_SHORT).show()
             }
+            view.findViewById(R.id.image_star)
+                    .setOnClickListener {
+                        Toast.makeText(view.context,"Star",Toast.LENGTH_SHORT).show()
+                    }
         }
     }
 }
