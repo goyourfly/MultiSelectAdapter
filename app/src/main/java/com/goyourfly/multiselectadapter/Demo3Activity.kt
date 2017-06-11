@@ -6,8 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.goyourfly.multiple.adapter.MultipleSelect
-import com.goyourfly.multiple.adapter.holder.RadioBtnDecorateFactory
-import com.goyourfly.multiple.adapter.tool.MenuBar
+import com.goyourfly.multiple.adapter.binder.view.RadioBtnFactory
+import com.goyourfly.multiple.adapter.menu.MenuBar
 import java.util.*
 
 class Demo3Activity : RecyclerActivity() {
@@ -18,7 +18,7 @@ class Demo3Activity : RecyclerActivity() {
         recycler.adapter = MultipleSelect
                 .with(this)
                 .adapter(adapter)
-                .decorateFactory(RadioBtnDecorateFactory())
+                .decorateFactory(RadioBtnFactory())
                 .customControl(CustomMenuBar(this, adapter))
                 .build()
 

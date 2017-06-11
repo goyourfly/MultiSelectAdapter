@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import com.goyourfly.multiple.adapter.MultipleSelect
-import com.goyourfly.multiple.adapter.holder.ColorChangeDecorateFactory
-import com.goyourfly.multiple.adapter.tool.CustomMenuBar
+import com.goyourfly.multiple.adapter.binder.color.ColorFactory
+import com.goyourfly.multiple.adapter.menu.CustomMenuBar
 
 class Demo4Activity : RecyclerActivity() {
     val menuClickListener = Toolbar.OnMenuItemClickListener({
@@ -19,7 +19,7 @@ class Demo4Activity : RecyclerActivity() {
         recycler.adapter = MultipleSelect
                 .with(this)
                 .adapter(DemoAdapter())
-                .decorateFactory(ColorChangeDecorateFactory())
+                .decorateFactory(ColorFactory())
                 .customControl(CustomMenuBar(this,R.menu.menu_select, Color.BLACK,menuClickListener))
                 .build()
 

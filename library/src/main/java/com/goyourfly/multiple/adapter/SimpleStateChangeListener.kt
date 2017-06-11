@@ -21,6 +21,10 @@ open class SimpleStateChangeListener:StateChangeListener{
 
     }
 
+    override fun onDelete(array: ArrayList<Int>) {
+
+    }
+
     override fun onCancel() {
 
     }

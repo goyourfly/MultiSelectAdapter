@@ -16,5 +16,7 @@ interface StateChangeListener{
 
     fun onDone(array: ArrayList<Int>)
 
+    fun onDelete(array: ArrayList<Int>)
+
     fun onCancel()
 }

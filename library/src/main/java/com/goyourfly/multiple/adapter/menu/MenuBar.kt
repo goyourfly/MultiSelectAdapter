@@ -1,4 +1,4 @@
-package com.goyourfly.multiple.adapter.tool
+package com.goyourfly.multiple.adapter.menu
 
 import android.app.Activity
 import android.view.Gravity
@@ -12,10 +12,10 @@ import android.widget.PopupWindow
 
 abstract class MenuBar(val activity: Activity){
     var popupWindow: PopupWindow? = null
-    var controler: ModeControl? = null
+    var controler: MenuControl? = null
 
-    fun initControl(modeControl: ModeControl){
-        this.controler = modeControl
+    fun initControl(menuControl: MenuControl){
+        this.controler = menuControl
     }
 
     abstract fun getContentView(): View;

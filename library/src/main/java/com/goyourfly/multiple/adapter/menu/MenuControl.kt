@@ -1,10 +1,10 @@
-package com.goyourfly.multiple.adapter.tool
+package com.goyourfly.multiple.adapter.menu
 
 /**
  * Created by gaoyufei on 2017/6/9.
  */
 
-interface ModeControl {
+interface MenuControl {
 
     /**
      * 刷新列表
@@ -26,6 +26,11 @@ interface ModeControl {
      * Confirm and exit select mode
      */
     fun done(refresh: Boolean = true)
+
+    /**
+     * Delete and exit select mode
+     */
+    fun delete(refresh: Boolean = true)
 
     /**
      * Cancel and exit select mode

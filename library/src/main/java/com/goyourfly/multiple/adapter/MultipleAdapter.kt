@@ -7,23 +7,26 @@ import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.util.TypedValue
 import android.view.ViewGroup
-import com.goyourfly.multiple.adapter.holder.BaseViewHolder
-import com.goyourfly.multiple.adapter.holder.DecorateFactory
-import com.goyourfly.multiple.adapter.tool.ModeControl
-import com.goyourfly.multiple.adapter.tool.MenuBar
+import com.goyourfly.multiple.adapter.binder.BaseViewHolder
+import com.goyourfly.multiple.adapter.binder.DecorateFactory
+import com.goyourfly.multiple.adapter.menu.MenuControl
+import com.goyourfly.multiple.adapter.menu.MenuBar
 
 /**
  * Created by gaoyufei on 2017/6/8.
+ * 这是个Adapter的子类，使用装饰者模式
+ * 对调用者的Adapter进行修改，增加多选
+ * 功能
  */
 
-class MultipleAdapter(val activity: Activity,
-                      val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
+class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
                       val stateChangeListener: StateChangeListener?,
                       val popupToolbar: MenuBar?,
+                      val ignoreType: Array<Int>?,
                       val decorateFactory: DecorateFactory,
-                      val duration: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ModeControl {
+                      val duration: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MenuControl {
 
-    var showState = ShowState.DEFAULT
+    var showState = ViewState.DEFAULT
     val selectIndex = SparseBooleanArray()
     var selectNum = 0
     var handler = Handler()
@@ -33,40 +36,65 @@ class MultipleAdapter(val activity: Activity,
     }
 
     var run = Runnable {
-        if (showState == ShowState.DEFAULT_TO_SELECT) {
-            showState = ShowState.SELECT
-        } else if (showState == ShowState.SELECT_TO_DEFAULT) {
-            showState = ShowState.DEFAULT
+        if (showState == ViewState.DEFAULT_TO_SELECT) {
+            showState = ViewState.SELECT
+        } else if (showState == ViewState.SELECT_TO_DEFAULT) {
+            showState = ViewState.DEFAULT
         }
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        val holder = viewHolder as BaseViewHolder
+        if (viewHolder !is BaseViewHolder) {
+            adapter.onBindViewHolder(viewHolder, position)
+            return
+        }
         /**
          * 先调用外界的绑定ViewHolder
          */
-        adapter.onBindViewHolder(holder.viewHolder, position)
+        adapter.onBindViewHolder(viewHolder.viewHolder, position)
+        /**
+         * 如果被忽略，则不往下走
+         */
+        if (isIgnore(position))
+            return
 
         if (selectIndex.get(position)) {
-            holder.selectStateChanged(SelectState.SELECT)
+            viewHolder.selectStateChanged(SelectState.SELECT)
         } else {
-            holder.selectStateChanged(SelectState.UN_SELECT)
+            viewHolder.selectStateChanged(SelectState.UN_SELECT)
         }
 
-        holder.showStateChanged(showState)
+        viewHolder.showStateChanged(showState)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): RecyclerView.ViewHolder {
         val outerHolder = adapter.onCreateViewHolder(viewGroup, position)
+        if (isIgnore(position))
+            return outerHolder
         return decorateFactory.decorate(outerHolder, this)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return adapter.getItemId(position)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return adapter.getItemViewType(position)
     }
 
     override fun getItemCount(): Int {
         return adapter.itemCount
     }
 
+    /**
+     * 在选择模式中的点击才在这里处理
+     * 正常模式的话，会传递给调用者的
+     * adapter
+     */
     fun onItemClick(position: Int) {
-        if (showState != ShowState.SELECT)
+        if (isIgnore(position))
+            return
+        if (showState != ViewState.SELECT)
             return
         selectIndex.put(position, !selectIndex[position])
         selectNum += if (selectIndex[position]) 1 else -1
@@ -83,14 +111,43 @@ class MultipleAdapter(val activity: Activity,
         }
     }
 
+    /**
+     * Item长按
+     */
+    fun onItemLongClick(position: Int): Boolean {
+        if (isIgnore(position))
+            return false
+        selectIndex.clear()
+        if (showState == ViewState.DEFAULT) {
+            selectMode(false)
+            selectIndex.put(position, true)
+            stateChangeListener?.onSelect(position, selectNum)
+        } else if (showState == ViewState.SELECT) {
+            selectNum = 0
+            cancel()
+        }
+        notifyDataSetChanged()
+        handler.postDelayed(run, duration)
+        return true
+    }
 
-    override fun refresh(){
+    /**
+     * 判断这个类型是否被忽略
+     */
+    fun isIgnore(position: Int): Boolean {
+        if (ignoreType == null)
+            return false
+        val type = getItemViewType(position)
+        return ignoreType.contains(type)
+    }
+
+    override fun refresh() {
         notifyDataSetChanged()
     }
 
     override fun selectMode(refresh: Boolean) {
         selectNum = 1
-        showState = ShowState.DEFAULT_TO_SELECT
+        showState = ViewState.DEFAULT_TO_SELECT
         popupToolbar?.show()
         popupToolbar?.numChanged(selectNum)
         stateChangeListener?.onSelectMode()
@@ -103,9 +160,9 @@ class MultipleAdapter(val activity: Activity,
     }
 
     override fun done(refresh: Boolean) {
-        if (showState == ShowState.DEFAULT)
+        if (showState == ViewState.DEFAULT)
             return
-        showState = ShowState.SELECT_TO_DEFAULT
+        showState = ViewState.SELECT_TO_DEFAULT
         popupToolbar?.dismiss()
         if (refresh)
             notifyDataSetChanged()
@@ -114,14 +171,26 @@ class MultipleAdapter(val activity: Activity,
         selectIndex.clear()
     }
 
+    override fun delete(refresh: Boolean) {
+        if (showState == ViewState.DEFAULT)
+            return
+        showState = ViewState.SELECT_TO_DEFAULT
+        popupToolbar?.dismiss()
+        if (refresh)
+            notifyDataSetChanged()
+        handler.postDelayed(run, duration)
+        stateChangeListener?.onDelete(getSelectIndex())
+        selectIndex.clear()
+    }
+
     override fun getSelect(): ArrayList<Int> {
         return getSelectIndex()
     }
 
     override fun cancel(refresh: Boolean): Boolean {
-        if (showState == ShowState.DEFAULT)
+        if (showState == ViewState.DEFAULT)
             return false
-        showState = ShowState.SELECT_TO_DEFAULT
+        showState = ViewState.SELECT_TO_DEFAULT
         popupToolbar?.dismiss()
         if (refresh)
             notifyDataSetChanged()
@@ -142,22 +211,29 @@ class MultipleAdapter(val activity: Activity,
         return list
     }
 
-    fun onItemLongClick(position: Int): Boolean {
-        selectIndex.clear()
-        if (showState == ShowState.DEFAULT) {
-            selectMode(false)
-            selectIndex.put(position, true)
-            stateChangeListener?.onSelect(position, selectNum)
-        } else if (showState == ShowState.SELECT) {
-            selectNum = 0
-            cancel()
-        }
-        notifyDataSetChanged()
-        handler.postDelayed(run, duration)
-        return true
+
+    override fun setHasStableIds(hasStableIds: Boolean) {
+        super.setHasStableIds(hasStableIds)
+        adapter.setHasStableIds(hasStableIds)
     }
 
-    fun Float.toPx(context: Context): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, context.resources.getDisplayMetrics()).toInt();
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+        super.onViewRecycled(holder)
+        adapter.onViewRecycled(holder)
+    }
+
+    override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder?): Boolean {
+        super.onFailedToRecycleView(holder)
+        return adapter.onFailedToRecycleView(holder)
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+        super.onAttachedToRecyclerView(recyclerView)
+        adapter.onAttachedToRecyclerView(recyclerView)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        adapter.onDetachedFromRecyclerView(recyclerView)
     }
 }

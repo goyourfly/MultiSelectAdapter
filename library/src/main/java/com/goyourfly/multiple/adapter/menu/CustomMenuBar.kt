@@ -1,4 +1,4 @@
-package com.goyourfly.multiple.adapter.tool
+package com.goyourfly.multiple.adapter.menu
 
 import android.app.Activity
 import android.graphics.Color
@@ -28,7 +28,7 @@ class CustomMenuBar(activity: Activity,
         toolbar.setBackgroundColor(menuBgColor)
         toolbar.setTitleTextColor(Color.WHITE)
         toolbar.inflateMenu(menuId)
-        toolbar.navigationIcon = activity.resources.getDrawable(R.drawable.ic_arrow_back)
+        toolbar.navigationIcon = activity.resources.getDrawable(R.drawable.ic_arrow_back_black_24dp)
         toolbar.setNavigationOnClickListener {
             dismiss()
             controler?.cancel()

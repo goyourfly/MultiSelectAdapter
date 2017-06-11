@@ -1,4 +1,4 @@
-package com.goyourfly.multiple.adapter.holder
+package com.goyourfly.multiple.adapter.binder
 
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.goyourfly.multiple.adapter.MultipleAdapter
-import com.goyourfly.multiple.adapter.ShowState
+import com.goyourfly.multiple.adapter.ViewState
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -15,8 +15,9 @@ abstract class BaseViewHolder(val view: View,
                               val viewHolder: RecyclerView.ViewHolder,
                               val adapter: MultipleAdapter) : RecyclerView.ViewHolder(view) {
 
+    val onTouchListener = OnTouchListener(adapter,this)
     init {
-        viewHolder.itemView.setOnTouchListener(OnTouchListener(adapter, this))
+        viewHolder.itemView.setOnTouchListener(onTouchListener)
     }
 
     abstract fun selectStateChanged(state: Int)
@@ -40,7 +41,6 @@ abstract class BaseViewHolder(val view: View,
         }
 
         override fun onTouch(v: View, event: MotionEvent): Boolean {
-            Log.d("onTouch","event:" + event.action)
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     isTouching = true
@@ -61,7 +61,7 @@ abstract class BaseViewHolder(val view: View,
                     val endX = event.x
                     val endY = event.y
                     if (isTouching && isAClick(startX, endX, startY, endY)) {
-                        if (adapter.showState == ShowState.SELECT) {
+                        if (adapter.showState == ViewState.SELECT) {
                             adapter.onItemClick(holder.adapterPosition)
                         } else {
                             v.performClick()
@@ -88,11 +88,5 @@ abstract class BaseViewHolder(val view: View,
             return true
         }
 
-        private fun isLongClick(starTime:Long,endTime: Long):Boolean{
-            if(endTime - starTime > CLICK_LONG_TIME){
-                return true
-            }
-            return false
-        }
     }
 }

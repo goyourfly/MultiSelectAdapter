@@ -3,7 +3,7 @@ package com.goyourfly.multiple.adapter
 /**
  * Created by gaoyufei on 2017/6/8.
  */
-object ShowState {
+object ViewState {
     val DEFAULT = 1
     val DEFAULT_TO_SELECT = 2
     val SELECT = 3

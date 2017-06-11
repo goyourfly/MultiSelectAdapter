@@ -2,10 +2,10 @@ package com.goyourfly.multiple.adapter
 
 import android.app.Activity
 import android.support.v7.widget.RecyclerView
-import com.goyourfly.multiple.adapter.holder.RadioBtnDecorateFactory
-import com.goyourfly.multiple.adapter.holder.DecorateFactory
-import com.goyourfly.multiple.adapter.tool.DefaultMenuBar
-import com.goyourfly.multiple.adapter.tool.MenuBar
+import com.goyourfly.multiple.adapter.binder.DecorateFactory
+import com.goyourfly.multiple.adapter.binder.view.RadioBtnFactory
+import com.goyourfly.multiple.adapter.menu.DefaultMenuBar
+import com.goyourfly.multiple.adapter.menu.MenuBar
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -39,6 +39,7 @@ object MultipleSelect {
          */
         private var stateChangeListener: StateChangeListener? = null
 
+        private var ignoreType:Array<Int>? = null
         /**
          * 动画时长
          */
@@ -55,6 +56,10 @@ object MultipleSelect {
             return this
         }
 
+        fun ignore(ignore: Array<Int>):Builder{
+            this.ignoreType = ignore
+            return this
+        }
 
         fun customControl(menuBar: MenuBar): Builder {
             this.customMenu = menuBar
@@ -71,13 +76,13 @@ object MultipleSelect {
                 throw NullPointerException("You must specific the adapter")
 
             if(decorateFactory == null){
-                decorateFactory = RadioBtnDecorateFactory(duration = this.duration)
+                decorateFactory = RadioBtnFactory(duration = this.duration)
             }
 
             if (customMenu == null) {
                 customMenu = DefaultMenuBar(activity,0xFF3F51B5.toInt())
             }
-            return MultipleAdapter(activity, adapter!!, stateChangeListener, customMenu, decorateFactory!!, duration)
+            return MultipleAdapter(adapter!!, stateChangeListener, customMenu, ignoreType,decorateFactory!!, duration)
         }
 
     }

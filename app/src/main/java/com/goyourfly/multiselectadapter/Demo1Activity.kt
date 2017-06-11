@@ -1,9 +1,8 @@
 package com.goyourfly.multiselectadapter
 
-import android.graphics.Color
 import android.os.Bundle
 import com.goyourfly.multiple.adapter.*
-import com.goyourfly.multiple.adapter.holder.RadioBtnDecorateFactory
+import com.goyourfly.multiple.adapter.binder.view.CheckBoxFactory
 
 class Demo1Activity : RecyclerActivity() {
     val stateChangeListener = SimpleStateChangeListener()
@@ -13,8 +12,9 @@ class Demo1Activity : RecyclerActivity() {
 
         recycler.adapter = MultipleSelect
                 .with(this)
-                .adapter(DemoAdapter())
-                .decorateFactory(RadioBtnDecorateFactory(colorFilter = Color.RED))
+                .adapter(DemoSectionAdapter())
+                .decorateFactory(CheckBoxFactory())
+                .ignore(arrayOf(1))
                 .stateChangeListener(stateChangeListener)
                 .build()
     }

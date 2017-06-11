@@ -3,7 +3,7 @@ package com.goyourfly.multiselectadapter
 import android.os.Bundle
 import android.util.Log
 import com.goyourfly.multiple.adapter.MultipleSelect
-import com.goyourfly.multiple.adapter.holder.ColorChangeDecorateFactory
+import com.goyourfly.multiple.adapter.binder.color.ColorFactory
 
 class Demo2Activity : RecyclerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,7 +12,7 @@ class Demo2Activity : RecyclerActivity() {
         recycler.adapter = MultipleSelect
                 .with(this)
                 .adapter(DemoAdapter())
-                .decorateFactory(ColorChangeDecorateFactory())
+                .decorateFactory(ColorFactory())
                 .build()
 
     }

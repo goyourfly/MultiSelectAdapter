@@ -6,6 +6,4 @@ package com.goyourfly.multiple.adapter
 object SelectState {
     val UN_SELECT = 1
     val SELECT = 3
-
-
 }
