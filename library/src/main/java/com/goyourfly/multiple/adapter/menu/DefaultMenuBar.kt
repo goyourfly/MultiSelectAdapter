@@ -16,8 +16,8 @@ class DefaultMenuBar(activity: Activity, val color:Int): MenuBar(activity){
         toolbar.title = title
     }
 
-    override fun numChanged(num:Int){
-        setTitle("Select num:${num}")
+    override fun onUpdateTitle(select:Int, total:Int){
+        setTitle("Select num:${select}")
     }
 
     override fun getContentView(): View {

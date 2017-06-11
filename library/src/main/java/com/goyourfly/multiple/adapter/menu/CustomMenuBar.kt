@@ -19,8 +19,8 @@ class CustomMenuBar(activity: Activity,
         toolbar.title = title
     }
 
-    override fun numChanged(num:Int){
-        setTitle("${num}/${controler?.getTotal()}")
+    override fun onUpdateTitle(select:Int, total:Int){
+        setTitle("${select}/${total}")
     }
 
     override fun getContentView(): View {

@@ -16,15 +16,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById(R.id.demo_2).setOnClickListener {
-            startActivity(Intent(it.context, Demo2Activity::class.java))
-        }
-
-        findViewById(R.id.demo_3).setOnClickListener {
             startActivity(Intent(it.context, Demo3Activity::class.java))
         }
 
-        findViewById(R.id.demo_4).setOnClickListener {
+        findViewById(R.id.demo_3).setOnClickListener {
             startActivity(Intent(it.context, Demo4Activity::class.java))
+        }
+
+        findViewById(R.id.demo_4).setOnClickListener {
+            startActivity(Intent(it.context, Demo5Activity::class.java))
         }
     }
 

@@ -1,11 +1,8 @@
 package com.goyourfly.multiple.adapter
 
-import android.app.Activity
-import android.content.Context
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
-import android.util.TypedValue
 import android.view.ViewGroup
 import com.goyourfly.multiple.adapter.binder.BaseViewHolder
 import com.goyourfly.multiple.adapter.binder.DecorateFactory
@@ -98,7 +95,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
             return
         selectIndex.put(position, !selectIndex[position])
         selectNum += if (selectIndex[position]) 1 else -1
-        popupToolbar?.numChanged(selectNum)
+        popupToolbar?.onUpdateTitle(selectNum)
         if (selectIndex[position]) {
             stateChangeListener?.onSelect(position, selectNum)
         } else {
@@ -149,7 +146,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         selectNum = 1
         showState = ViewState.DEFAULT_TO_SELECT
         popupToolbar?.show()
-        popupToolbar?.numChanged(selectNum)
+        popupToolbar?.onUpdateTitle(selectNum)
         stateChangeListener?.onSelectMode()
         if (refresh)
             notifyDataSetChanged()
