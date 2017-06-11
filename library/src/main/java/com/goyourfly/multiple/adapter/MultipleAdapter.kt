@@ -95,7 +95,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
             return
         selectIndex.put(position, !selectIndex[position])
         selectNum += if (selectIndex[position]) 1 else -1
-        popupToolbar?.onUpdateTitle(selectNum)
+        popupToolbar?.onUpdateTitle(selectNum,getTotal())
         if (selectIndex[position]) {
             stateChangeListener?.onSelect(position, selectNum)
         } else {
@@ -146,7 +146,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         selectNum = 1
         showState = ViewState.DEFAULT_TO_SELECT
         popupToolbar?.show()
-        popupToolbar?.onUpdateTitle(selectNum)
+        popupToolbar?.onUpdateTitle(selectNum,getTotal())
         stateChangeListener?.onSelectMode()
         if (refresh)
             notifyDataSetChanged()

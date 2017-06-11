@@ -20,7 +20,7 @@ abstract class MenuBar(val activity: Activity){
 
     abstract fun getContentView(): View;
 
-    abstract fun onUpdateTitle(select:Int,total:Int)
+    abstract fun onUpdateTitle(selectCount:Int,total:Int)
 
     fun show(){
         popupWindow = PopupWindow(getContentView(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)

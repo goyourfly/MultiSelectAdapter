@@ -26,6 +26,10 @@ class Demo4Activity : RecyclerActivity() {
 
 
     class CustomMenuBar(activity: Activity, val adapter: DemoAdapter) : MenuBar(activity) {
+        override fun onUpdateTitle(select: Int, total: Int) {
+            title?.setText("当前选中：$select 条数据")
+        }
+
         var title: TextView? = null
         var confirm: View? = null
         var cancel: View? = null
@@ -50,10 +54,6 @@ class Demo4Activity : RecyclerActivity() {
                 controler?.done()
             }
             return view;
-        }
-
-        override fun onUpdateTitle(num: Int) {
-            title?.setText("当前选中：$num 条数据")
         }
 
         fun String.log() {
