@@ -19,6 +19,30 @@ MultiSelectAdapter是一个为RecyclerView设计的Adapter，它可以在不修�
 </tr>
 </table>
 
+## Compile
+[![](https://jitpack.io/v/goyourfly/MultiSelectAdapter.svg)](https://jitpack.io/#goyourfly/MultiSelectAdapter)
+
+Step 1. Add it in your root build.gradle at the end of repositories:
+
+````
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+````
+
+Step 2. Add the dependency
+
+````
+dependencies {
+    compile 'com.github.goyourfly:MultiSelectAdapter:3.0'
+}
+
+````
+
+
 ## Usage
 
 ````java
@@ -78,7 +102,7 @@ open class SimpleStateChangeListener:StateChangeListener{
 
 ### DecorateFactory
 
-DecorateFactory定义了在多选模式下Item的样式，如下左侧是正常模式的显示状态，右侧是多线模式下的显示样式（其中的一种样式）
+DecorateFactory定义了在多选模式下Item的样式，如下第一个是正常模式的显示状态，第二个是多线模式下的显示样式（其中的一种样式）
 
 <img src="./screenshot/NormalItemView.png" alt="RadioButtonStyle" width="200" />
 <img src="./screenshot/SelectItemView.png" alt="RadioButtonStyle" width="200" />
