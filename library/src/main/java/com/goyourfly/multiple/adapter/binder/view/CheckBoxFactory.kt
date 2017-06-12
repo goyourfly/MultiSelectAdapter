@@ -10,7 +10,10 @@ import android.widget.FrameLayout
  * Created by gaoyufei on 2017/6/11.
  */
 
-class CheckBoxFactory(val color: Int = Color.RED, val duration: Int = 300) : CustomViewFactory() {
+class CheckBoxFactory(val color: Int = Color.RED,
+                      val duration: Int = 300,
+                      val gravity: Int = Gravity.RIGHT,
+                      val marginDp:Int = 8) : CustomViewFactory() {
     override fun onShowAnimation(itemView: View, selectView: View) {
         selectView.visibility = View.VISIBLE
     }
@@ -41,9 +44,11 @@ class CheckBoxFactory(val color: Int = Color.RED, val duration: Int = 300) : Cus
         root.removeAllViews()
         root.addView(itemView)
         val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-        params.gravity = Gravity.RIGHT
-        params.topMargin = 8.toPx(root.context)
-        params.rightMargin = 8.toPx(root.context)
+        params.gravity = gravity
+        params.leftMargin = marginDp.toPx(root.context)
+        params.topMargin = marginDp.toPx(root.context)
+        params.rightMargin = marginDp.toPx(root.context)
+        params.bottomMargin = marginDp.toPx(root.context)
         root.addView(selectView, params)
     }
 
