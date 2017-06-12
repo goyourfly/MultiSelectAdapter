@@ -15,22 +15,31 @@
         android:text="DEMO1" />
 
     <Button
-        android:layout_marginTop="16dp"
         android:id="@+id/demo_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DEMO2" />
-    <Button
         android:layout_marginTop="16dp"
+        android:text="DEMO2" />
+
+    <Button
         android:id="@+id/demo_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DEMO3" />
-    <Button
         android:layout_marginTop="16dp"
+        android:text="DEMO3" />
+
+    <Button
         android:id="@+id/demo_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="DEMO4" />
+
+    <Button
+        android:id="@+id/demo_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DEMO5" />
 
 </LinearLayout>

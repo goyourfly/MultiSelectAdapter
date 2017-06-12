@@ -23,6 +23,16 @@ interface MenuControl {
     fun getTotal():Int
 
     /**
+     * 全选
+     */
+    fun selectAll()
+
+    /**
+     * 全部不选
+     */
+    fun selectNothing()
+
+    /**
      * Confirm and exit select mode
      */
     fun done(refresh: Boolean = true)

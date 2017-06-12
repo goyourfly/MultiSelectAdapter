@@ -1,6 +1,9 @@
 package com.goyourfly.multiple.adapter.binder.view
 
+import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.goyourfly.multiple.adapter.R
 import com.goyourfly.multiple.adapter.binder.BaseViewHolder
 
 /**
@@ -12,6 +15,8 @@ abstract class CustomViewFactory : com.goyourfly.multiple.adapter.binder.Decorat
     override fun decorate(viewHolder: android.support.v7.widget.RecyclerView.ViewHolder, adapter: com.goyourfly.multiple.adapter.MultipleAdapter): com.goyourfly.multiple.adapter.binder.BaseViewHolder {
         val context = viewHolder.itemView.context
         val root = onCreateRootView(context)
+        val rootParams = ViewGroup.LayoutParams(viewHolder.itemView.layoutParams)
+        root.layoutParams = rootParams
         return createViewHolder(context, root, viewHolder, adapter)
     }
 
@@ -22,18 +27,17 @@ abstract class CustomViewFactory : com.goyourfly.multiple.adapter.binder.Decorat
                          adapter: com.goyourfly.multiple.adapter.MultipleAdapter): BaseViewHolder {
         val selectView = onCreateSelectView(context)
         val defaultView = onCreateNormalView(context)
-        val selectRoot = android.widget.FrameLayout(context)
-        val layoutParams = android.widget.FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-        layoutParams.gravity = android.view.Gravity.CENTER
+        val selectRoot = FrameLayout(context)
+        selectRoot.id = R.id.id_select_view
+        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+        layoutParams.gravity = Gravity.CENTER
         selectRoot.addView(defaultView, layoutParams)
         selectRoot.addView(selectView, layoutParams)
         selectRoot.visibility = android.view.View.GONE
 
         onBindSelectView(root, viewHolder.itemView, selectRoot)
 
-        val rootParams = android.view.ViewGroup.LayoutParams(viewHolder.itemView.layoutParams)
-        root.layoutParams = rootParams
-        selectRoot.measure(rootParams.width, rootParams.height)
+        selectRoot.measure(root.width, root.height)
         selectRoot.visibility = android.view.View.GONE
         return CustomViewHolder(root, viewHolder, adapter, this, selectRoot, selectView, defaultView)
     }

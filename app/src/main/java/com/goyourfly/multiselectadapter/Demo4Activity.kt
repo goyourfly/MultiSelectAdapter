@@ -3,6 +3,7 @@ package com.goyourfly.multiselectadapter
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import com.goyourfly.multiple.adapter.MultipleSelect
@@ -19,15 +20,15 @@ class Demo4Activity : RecyclerActivity() {
                 .with(this)
                 .adapter(adapter)
                 .decorateFactory(RadioBtnFactory())
-                .customControl(CustomMenuBar(this, adapter))
+                .customMenu(CustomMenuBar(this, adapter))
                 .build()
 
     }
 
 
-    class CustomMenuBar(activity: Activity, val adapter: DemoAdapter) : MenuBar(activity) {
-        override fun onUpdateTitle(select: Int, total: Int) {
-            title?.setText("当前选中：$select 条数据")
+    class CustomMenuBar(activity: Activity, val adapter: DemoAdapter) : MenuBar(activity,Gravity.TOP) {
+        override fun onUpdateTitle(selectCount: Int, total: Int) {
+            title?.setText("当前选中：$selectCount 条数据")
         }
 
         var title: TextView? = null

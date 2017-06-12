@@ -83,6 +83,24 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         return adapter.itemCount
     }
 
+    override fun selectAll() {
+        for (i in 0..adapter.itemCount - 1){
+            selectIndex.put(i,true)
+        }
+        selectNum = adapter.itemCount
+        popupToolbar?.onUpdateTitle(selectNum,getTotal())
+        notifyDataSetChanged()
+    }
+
+    override fun selectNothing() {
+        for (i in 0..adapter.itemCount - 1){
+            selectIndex.put(i,false)
+        }
+        selectNum = 0
+        popupToolbar?.onUpdateTitle(selectNum,getTotal())
+        notifyDataSetChanged()
+    }
+
     /**
      * 在选择模式中的点击才在这里处理
      * 正常模式的话，会传递给调用者的

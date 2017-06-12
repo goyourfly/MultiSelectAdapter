@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import com.goyourfly.multiple.adapter.MultipleSelect
 import com.goyourfly.multiple.adapter.binder.color.ColorFactory
+import com.goyourfly.multiple.adapter.menu.SimpleDeleteMenuBar
+import com.goyourfly.multiple.adapter.menu.SimpleDeleteSelectAllMenuBar
 
 class Demo3Activity : RecyclerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,6 +15,7 @@ class Demo3Activity : RecyclerActivity() {
                 .with(this)
                 .adapter(DemoAdapter())
                 .decorateFactory(ColorFactory())
+                .customMenu(SimpleDeleteSelectAllMenuBar(this,resources.getColor(R.color.colorAccent)))
                 .build()
 
     }
