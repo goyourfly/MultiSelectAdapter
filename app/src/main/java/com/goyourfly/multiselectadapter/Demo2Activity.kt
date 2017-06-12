@@ -15,9 +15,9 @@ class Demo2Activity : RecyclerActivity() {
         recycler.adapter = MultipleSelect
                 .with(this)
                 .adapter(DemoSectionAdapter())
-                .decorateFactory(CheckBoxFactory(gravity = Gravity.LEFT))
+                .decorateFactory(CheckBoxFactory(gravity = Gravity.RIGHT))
                 .customMenu(SimpleDeleteMenuBar(this,resources.getColor(R.color.colorAccent),Gravity.BOTTOM))
-                .ignore(arrayOf(1))
+                .ignoreViewType(arrayOf(1))
                 .stateChangeListener(stateChangeListener)
                 .build()
     }

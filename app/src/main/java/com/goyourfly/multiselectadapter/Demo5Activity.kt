@@ -19,7 +19,7 @@ class Demo5Activity : RecyclerActivity() {
                 .with(this)
                 .adapter(DemoAdapter())
                 .decorateFactory(ColorFactory())
-                .customMenu(MyMenuBar(this, menu_select, Color.BLACK))
+                .customMenu(MyMenuBar(this, menu_select, resources.getColor(R.color.colorPrimary)))
                 .build()
 
     }

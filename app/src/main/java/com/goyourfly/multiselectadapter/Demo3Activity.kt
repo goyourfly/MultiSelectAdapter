@@ -15,7 +15,7 @@ class Demo3Activity : RecyclerActivity() {
                 .with(this)
                 .adapter(DemoAdapter())
                 .decorateFactory(ColorFactory())
-                .customMenu(SimpleDeleteSelectAllMenuBar(this,resources.getColor(R.color.colorAccent)))
+                .customMenu(SimpleDeleteSelectAllMenuBar(this,resources.getColor(R.color.colorPrimary)))
                 .build()
 
     }

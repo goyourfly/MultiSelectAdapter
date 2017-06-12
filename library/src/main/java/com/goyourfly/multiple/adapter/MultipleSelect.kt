@@ -56,7 +56,7 @@ object MultipleSelect {
             return this
         }
 
-        fun ignore(ignore: Array<Int>):Builder{
+        fun ignoreViewType(ignore: Array<Int>):Builder{
             this.ignoreType = ignore
             return this
         }

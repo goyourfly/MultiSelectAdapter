@@ -21,8 +21,8 @@ public class Demo6Activity extends RecyclerActivity {
         MultipleAdapter adapter = MultipleSelect
                 .with(this)
                 .adapter(new DemoSectionAdapter())
-                .ignore(new Integer[]{1})
-                .decorateFactory(new CheckBoxFactory(Color.RED, 300, Gravity.LEFT | Gravity.BOTTOM, 8))
+                .ignoreViewType(new Integer[]{1})
+                .decorateFactory(new CheckBoxFactory(Color.RED, 300, Gravity.RIGHT, 8))
                 .build();
         getRecycler().setAdapter(adapter);
     }

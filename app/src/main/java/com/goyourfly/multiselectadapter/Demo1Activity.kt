@@ -15,7 +15,7 @@ class Demo1Activity : RecyclerActivity() {
                 .with(this)
                 .adapter(DemoSectionAdapter())
                 .decorateFactory(RadioBtnFactory(gravity = Gravity.RIGHT))
-                .ignore(arrayOf(1))
+                .ignoreViewType(arrayOf(1))
                 .stateChangeListener(stateChangeListener)
                 .build()
     }
