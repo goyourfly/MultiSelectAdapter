@@ -9,7 +9,6 @@ import android.view.MenuItem
 import com.goyourfly.multiple.adapter.MultipleSelect
 import com.goyourfly.multiple.adapter.binder.color.ColorFactory
 import com.goyourfly.multiple.adapter.menu.CustomMenuBar
-import com.goyourfly.multiselectadapter.R.menu.*
 
 class Demo5Activity : RecyclerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +18,7 @@ class Demo5Activity : RecyclerActivity() {
                 .with(this)
                 .adapter(DemoAdapter())
                 .decorateFactory(ColorFactory())
-                .customMenu(MyMenuBar(this, menu_select, resources.getColor(R.color.colorPrimary)))
+                .customMenu(MyMenuBar(this, R.menu.menu_select, resources.getColor(R.color.colorPrimary)))
                 .build()
 
     }
