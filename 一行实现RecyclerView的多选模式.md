@@ -1,4 +1,4 @@
-### 一行代码实现RecyclerView的多选模式
+### 一行代码实现RecyclerView的多选批量操作
 
 [MultiSelectAdapter项目地址](https://github.com/goyourfly/MultiSelectAdapter)
 ### 装B部分
@@ -51,13 +51,13 @@ recycler.adapter = MultipleSelect.with(Activity).adapter(YourAdapter).build();
 ### 源码部分
 [MultiSelectAdapter源码](https://github.com/goyourfly/MultiSelectAdapter/tree/master/library/src/main/java/com/goyourfly/multiple/adapter)
 
-[时序图](#toc_14)
+[时序图](./screenshot/Sequence.png)
 
 其实这个项目本身没有用到任何复杂的技术，都是些很常用的东西，只不过是对普普通通的一些代码的封装，我觉得作为程序员，对语言使用的熟练度，高级的技巧固然重要，但更重要的是封装的思想，这种思想是通用的，这就像我们学习外语，会很多单词，很多句式，很多语法结构很重要，但是如果不能用这些学到的东西来准确的表达你的意思，那学这些也没有意义。
 
 
 ##### 整体结构：
-<img src="./screenshot/MultiSelectAdapter.svg" width="400" title="结构"/>
+<img src="./screenshot/MultiSelectAdapter.png" width="400" title="结构"/>
 
 从上面的图可以看出MultipleAdapter使用装饰模式，将用户的Adapter进行加工，然后将装饰后的ViewHolder返回RecyclerView，而装饰的具体过程交给DecorateFactory执行。
 
@@ -431,3 +431,5 @@ fun onItemClick(position: Int) {
 
 
 到这里，MultiSelectAdapter主要逻辑大概讲清楚了，剩下的都是些皮毛，如果有疑惑可以去看看源代码，就像我前面说的，这个Library没有使用什么高深的技术和高级的接口调用，有的只是一些对于封装的想法。
+
+>如果发现有什么错误，或有什么更先进的想法，请一定要告诉我。
