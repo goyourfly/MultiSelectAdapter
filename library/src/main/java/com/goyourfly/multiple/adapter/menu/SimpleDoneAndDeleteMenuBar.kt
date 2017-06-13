@@ -10,15 +10,15 @@ import com.goyourfly.multiple.adapter.R
  */
 class SimpleDoneAndDeleteMenuBar(activity: Activity, val color:Int, gravity:Int = Gravity.TOP):
         CustomMenuBar(activity,R.menu.menu_multiple_select_done_delete,color,gravity){
-    override fun onMenuItemClick(menuItem: MenuItem) {
+    override fun onMenuItemClick(menuItem: MenuItem,controller: MenuController) {
         when(menuItem.itemId){
             R.id.action_done ->{
                 dismiss()
-                controler?.done()
+                controller.done()
             }
             R.id.action_delete ->{
                 dismiss()
-                controler?.done()
+                controller.done()
             }
         }
     }

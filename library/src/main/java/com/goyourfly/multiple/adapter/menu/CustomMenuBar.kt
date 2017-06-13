@@ -31,12 +31,12 @@ abstract class CustomMenuBar(activity: Activity,
             controler?.cancel()
         }
         toolbar.setOnMenuItemClickListener {
-            onMenuItemClick(it)
+            onMenuItemClick(it,controler!!)
             true
         }
         return toolbar
     }
 
-    abstract fun onMenuItemClick(menuItem: MenuItem)
+    abstract fun onMenuItemClick(menuItem: MenuItem,controller: MenuController)
 
 }

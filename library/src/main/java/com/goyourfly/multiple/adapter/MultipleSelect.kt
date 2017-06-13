@@ -2,8 +2,8 @@ package com.goyourfly.multiple.adapter
 
 import android.app.Activity
 import android.support.v7.widget.RecyclerView
-import com.goyourfly.multiple.adapter.binder.DecorateFactory
-import com.goyourfly.multiple.adapter.binder.view.RadioBtnFactory
+import com.goyourfly.multiple.adapter.viewholder.DecorateFactory
+import com.goyourfly.multiple.adapter.viewholder.view.RadioBtnFactory
 import com.goyourfly.multiple.adapter.menu.SimpleDoneMenuBar
 import com.goyourfly.multiple.adapter.menu.MenuBar
 
@@ -80,7 +80,7 @@ object MultipleSelect {
             }
 
             if (customMenu == null) {
-                customMenu = SimpleDoneMenuBar(activity,0xFF3F51B5.toInt())
+                customMenu = SimpleDoneMenuBar(activity,activity.resources.getColor(R.color.colorPrimary))
             }
             return MultipleAdapter(adapter!!, stateChangeListener, customMenu, ignoreType,decorateFactory!!, duration)
         }

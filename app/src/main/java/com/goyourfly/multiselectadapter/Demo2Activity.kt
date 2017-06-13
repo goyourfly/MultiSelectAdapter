@@ -3,7 +3,7 @@ package com.goyourfly.multiselectadapter
 import android.os.Bundle
 import android.view.Gravity
 import com.goyourfly.multiple.adapter.*
-import com.goyourfly.multiple.adapter.binder.view.CheckBoxFactory
+import com.goyourfly.multiple.adapter.viewholder.view.CheckBoxFactory
 import com.goyourfly.multiple.adapter.menu.SimpleDeleteMenuBar
 
 class Demo2Activity : RecyclerActivity() {

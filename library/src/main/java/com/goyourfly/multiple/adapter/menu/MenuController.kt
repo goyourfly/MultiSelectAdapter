@@ -4,7 +4,7 @@ package com.goyourfly.multiple.adapter.menu
  * Created by gaoyufei on 2017/6/9.
  */
 
-interface MenuControl {
+interface MenuController {
 
     /**
      * 刷新列表

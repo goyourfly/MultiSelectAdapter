@@ -1,4 +1,4 @@
-package com.goyourfly.multiple.adapter.binder.view
+package com.goyourfly.multiple.adapter.viewholder.view
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -6,10 +6,10 @@ package com.goyourfly.multiple.adapter.binder.view
 class CustomViewHolder(view: android.view.View,
                        viewHolder: android.support.v7.widget.RecyclerView.ViewHolder,
                        adapter: com.goyourfly.multiple.adapter.MultipleAdapter,
-                       val animationInterface: com.goyourfly.multiple.adapter.binder.AnimationInterface,
+                       val animationInterface: com.goyourfly.multiple.adapter.viewholder.AnimationInterface,
                        val selectViewContainer: android.view.View,
                        val selectView: android.view.View,
-                       val unSelectView: android.view.View) : com.goyourfly.multiple.adapter.binder.BaseViewHolder(view, viewHolder, adapter) {
+                       val unSelectView: android.view.View) : com.goyourfly.multiple.adapter.viewholder.BaseViewHolder(view, viewHolder, adapter) {
     init {
         selectView.setOnTouchListener(onTouchListener)
         unSelectView.setOnTouchListener(onTouchListener)

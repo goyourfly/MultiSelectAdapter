@@ -1,10 +1,10 @@
-package com.goyourfly.multiple.adapter.binder.color
+package com.goyourfly.multiple.adapter.viewholder.color
 
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import com.goyourfly.multiple.adapter.MultipleAdapter
-import com.goyourfly.multiple.adapter.binder.BaseViewHolder
-import com.goyourfly.multiple.adapter.binder.DecorateFactory
+import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
+import com.goyourfly.multiple.adapter.viewholder.DecorateFactory
 
 /**
  * Created by gaoyufei on 2017/6/8.

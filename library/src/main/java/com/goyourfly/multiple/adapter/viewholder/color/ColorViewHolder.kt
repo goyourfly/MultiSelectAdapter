@@ -1,9 +1,4 @@
-package com.goyourfly.multiple.adapter.binder.color
-
-import android.support.v7.widget.RecyclerView
-import android.view.View
-import com.goyourfly.multiple.adapter.MultipleAdapter
-import com.goyourfly.multiple.adapter.SelectState
+package com.goyourfly.multiple.adapter.viewholder.color
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -13,7 +8,7 @@ class ColorViewHolder(view: android.view.View,
                       adapter: com.goyourfly.multiple.adapter.MultipleAdapter,
                       val colorViewId: Int,
                       val defaultColor: Int,
-                      val selectColor: Int) : com.goyourfly.multiple.adapter.binder.BaseViewHolder(view, viewHolder, adapter) {
+                      val selectColor: Int) : com.goyourfly.multiple.adapter.viewholder.BaseViewHolder(view, viewHolder, adapter) {
 
 
     val colorView: android.view.View by lazy {

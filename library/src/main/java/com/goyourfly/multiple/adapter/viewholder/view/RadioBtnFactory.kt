@@ -1,15 +1,12 @@
-package com.goyourfly.multiple.adapter.binder.view
+package com.goyourfly.multiple.adapter.viewholder.view
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.goyourfly.multiple.adapter.R
 

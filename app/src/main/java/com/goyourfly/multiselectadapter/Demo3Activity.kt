@@ -3,8 +3,7 @@ package com.goyourfly.multiselectadapter
 import android.os.Bundle
 import android.util.Log
 import com.goyourfly.multiple.adapter.MultipleSelect
-import com.goyourfly.multiple.adapter.binder.color.ColorFactory
-import com.goyourfly.multiple.adapter.menu.SimpleDeleteMenuBar
+import com.goyourfly.multiple.adapter.viewholder.color.ColorFactory
 import com.goyourfly.multiple.adapter.menu.SimpleDeleteSelectAllMenuBar
 
 class Demo3Activity : RecyclerActivity() {

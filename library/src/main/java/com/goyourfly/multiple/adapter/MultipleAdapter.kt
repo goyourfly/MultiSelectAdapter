@@ -4,9 +4,9 @@ import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.ViewGroup
-import com.goyourfly.multiple.adapter.binder.BaseViewHolder
-import com.goyourfly.multiple.adapter.binder.DecorateFactory
-import com.goyourfly.multiple.adapter.menu.MenuControl
+import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
+import com.goyourfly.multiple.adapter.viewholder.DecorateFactory
+import com.goyourfly.multiple.adapter.menu.MenuController
 import com.goyourfly.multiple.adapter.menu.MenuBar
 
 /**
@@ -21,7 +21,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
                       val popupToolbar: MenuBar?,
                       val ignoreType: Array<Int>?,
                       val decorateFactory: DecorateFactory,
-                      val duration: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MenuControl {
+                      val duration: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MenuController {
 
     var showState = ViewState.DEFAULT
     val selectIndex = SparseBooleanArray()

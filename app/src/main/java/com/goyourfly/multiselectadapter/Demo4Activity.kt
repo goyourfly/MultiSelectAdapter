@@ -7,7 +7,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import com.goyourfly.multiple.adapter.MultipleSelect
-import com.goyourfly.multiple.adapter.binder.view.RadioBtnFactory
+import com.goyourfly.multiple.adapter.viewholder.view.RadioBtnFactory
 import com.goyourfly.multiple.adapter.menu.MenuBar
 import java.util.*
 

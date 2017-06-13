@@ -1,18 +1,18 @@
-package com.goyourfly.multiple.adapter.binder.view
+package com.goyourfly.multiple.adapter.viewholder.view
 
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.goyourfly.multiple.adapter.R
-import com.goyourfly.multiple.adapter.binder.BaseViewHolder
+import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
 
 /**
  * Created by gaoyufei on 2017/6/8.
  * 继承这个类的类都是自定义选择和未选中view的
  */
-abstract class CustomViewFactory : com.goyourfly.multiple.adapter.binder.DecorateFactory, com.goyourfly.multiple.adapter.binder.AnimationInterface {
+abstract class CustomViewFactory : com.goyourfly.multiple.adapter.viewholder.DecorateFactory, com.goyourfly.multiple.adapter.viewholder.AnimationInterface {
 
-    override fun decorate(viewHolder: android.support.v7.widget.RecyclerView.ViewHolder, adapter: com.goyourfly.multiple.adapter.MultipleAdapter): com.goyourfly.multiple.adapter.binder.BaseViewHolder {
+    override fun decorate(viewHolder: android.support.v7.widget.RecyclerView.ViewHolder, adapter: com.goyourfly.multiple.adapter.MultipleAdapter): com.goyourfly.multiple.adapter.viewholder.BaseViewHolder {
         val context = viewHolder.itemView.context
         val root = onCreateRootView(context)
         val rootParams = ViewGroup.LayoutParams(viewHolder.itemView.layoutParams)

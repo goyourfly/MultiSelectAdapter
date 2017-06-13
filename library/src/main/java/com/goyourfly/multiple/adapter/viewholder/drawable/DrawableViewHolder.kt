@@ -1,8 +1,8 @@
-package com.goyourfly.multiple.adapter.binder.color
+package com.goyourfly.multiple.adapter.viewholder.color
 
 import android.graphics.drawable.Drawable
 import com.goyourfly.multiple.adapter.SelectState
-import com.goyourfly.multiple.adapter.binder.BaseViewHolder
+import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
 
 /**
  * Created by gaoyufei on 2017/6/8.

@@ -1,4 +1,4 @@
-package com.goyourfly.multiple.adapter.binder.view
+package com.goyourfly.multiple.adapter.viewholder.view
 
 import android.graphics.Color
 import android.view.Gravity

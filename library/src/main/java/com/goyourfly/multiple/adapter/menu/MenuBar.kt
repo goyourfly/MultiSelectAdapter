@@ -11,10 +11,10 @@ import android.widget.PopupWindow
 
 abstract class MenuBar(val activity: Activity,val gravity: Int){
     var popupWindow: PopupWindow? = null
-    var controler: MenuControl? = null
+    var controler: MenuController? = null
 
-    fun initControl(menuControl: MenuControl){
-        this.controler = menuControl
+    fun initControl(menuController: MenuController){
+        this.controler = menuController
     }
 
     abstract fun getContentView(): View;

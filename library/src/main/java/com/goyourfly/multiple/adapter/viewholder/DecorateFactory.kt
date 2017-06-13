@@ -1,4 +1,4 @@
-package com.goyourfly.multiple.adapter.binder
+package com.goyourfly.multiple.adapter.viewholder
 
 import android.support.v7.widget.RecyclerView
 import com.goyourfly.multiple.adapter.MultipleAdapter

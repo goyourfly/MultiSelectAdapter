@@ -1,8 +1,7 @@
-package com.goyourfly.multiple.adapter.binder
+package com.goyourfly.multiple.adapter.viewholder
 
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.goyourfly.multiple.adapter.MultipleAdapter
