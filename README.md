@@ -39,7 +39,6 @@ Step 2. Add the dependency
 dependencies {
     compile 'com.github.goyourfly:MultiSelectAdapter:3.1'
 }
-
 ````
 
 
@@ -102,7 +101,7 @@ open class SimpleStateChangeListener:StateChangeListener{
 
 ### DecorateFactory
 
-DecorateFactory定义了在多选模式下Item的样式，如下第一个是正常模式的显示状态，第二个是多线模式下的显示样式（其中的一种样式）
+DecorateFactory定义了在多选模式下Item的样式，如下第一个是正常模式的显示状态，第二个是多选模式下的显示样式（其中的一种样式）
 
 <img src="./screenshot/NormalItemView.png" alt="RadioButtonStyle" width="200" />
 <img src="./screenshot/SelectItemView.png" alt="RadioButtonStyle" width="200" />
@@ -185,18 +184,17 @@ class YourCustomFactory(val color: Int = Color.RED,
 你也可以通过继承CustomMenuBar来实现一个自己的MenuBar：
 
 ````kotlin
-	// menuId为一R.menu.*
-    class MyMenuBar(activity:Activity,menuId:Int,color:Int)
+class MyMenuBar(activity:Activity,menuId:Int,color:Int)
         :CustomMenuBar(activity,menuId,color,Gravity.TOP){
 
-        override fun onUpdateTitle(selectCount: Int, total: Int) {
-            toolbar.title = "选中：$selectCount 总共：$total"
-        }
-
-        override fun onMenuItemClick(menuItem: MenuItem) {
-            //TODO 这里处理点击事件
-        }
+    override fun onUpdateTitle(selectCount: Int, total: Int) {
+        toolbar.title = "选中：$selectCount 总共：$total"
     }
+
+    override fun onMenuItemClick(menuItem: MenuItem, controller: MenuController) {
+        //TODO 这里处理点击事件
+    }
+}
 ````
 
 #### 详细的使用可以看这里：[Code](./app/src/main/java/com/goyourfly/multiselectadapter/)
