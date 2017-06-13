@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.goyourfly.multiple.adapter.R
 import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
+import viewholder.view.CustomViewHolder
 
 /**
  * Created by gaoyufei on 2017/6/8.
