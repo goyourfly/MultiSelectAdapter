@@ -218,7 +218,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     fun getSelectIndex(): ArrayList<Int> {
         val list = arrayListOf<Int>()
-        for (i in 0..selectIndex.size() - 1) {
+        for (i in 0 until itemCount) {
             if (selectIndex[i]) {
                 list.add(i)
             }
