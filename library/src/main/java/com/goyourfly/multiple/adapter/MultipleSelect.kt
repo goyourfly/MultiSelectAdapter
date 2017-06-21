@@ -6,6 +6,7 @@ import com.goyourfly.multiple.adapter.viewholder.DecorateFactory
 import com.goyourfly.multiple.adapter.viewholder.view.RadioBtnFactory
 import com.goyourfly.multiple.adapter.menu.SimpleDoneMenuBar
 import com.goyourfly.multiple.adapter.menu.MenuBar
+import com.goyourfly.multiple.adapter.viewholder.color.ColorFactory
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -39,7 +40,9 @@ object MultipleSelect {
          */
         private var stateChangeListener: StateChangeListener? = null
 
-        private var ignoreType:Array<Int>? = null
+        private var list: MutableList<out Any>? = null
+
+        private var ignoreType: Array<Int>? = null
         /**
          * 动画时长
          */
@@ -56,7 +59,12 @@ object MultipleSelect {
             return this
         }
 
-        fun ignoreViewType(ignore: Array<Int>):Builder{
+        fun linkList(list: MutableList<out Any>): Builder {
+            this.list = list
+            return this
+        }
+
+        fun ignoreViewType(ignore: Array<Int>): Builder {
             this.ignoreType = ignore
             return this
         }
@@ -75,14 +83,15 @@ object MultipleSelect {
             if (adapter == null)
                 throw NullPointerException("You must specific the adapter")
 
-            if(decorateFactory == null){
-                decorateFactory = RadioBtnFactory(duration = this.duration)
+            if (decorateFactory == null) {
+                decorateFactory = ColorFactory()
             }
 
             if (customMenu == null) {
-                customMenu = SimpleDoneMenuBar(activity,activity.resources.getColor(R.color.colorPrimary))
+                customMenu = SimpleDoneMenuBar(activity, activity.resources.getColor(R.color.colorPrimary))
             }
-            return MultipleAdapter(adapter!!, stateChangeListener, customMenu, ignoreType,decorateFactory!!, duration)
+            val linkList = if (list == null) null else list as MutableList<in Any>
+            return MultipleAdapter(adapter!!, stateChangeListener, customMenu, ignoreType, linkList, decorateFactory!!, duration)
         }
 
     }

@@ -10,7 +10,7 @@ import com.goyourfly.multiple.adapter.viewholder.DecorateFactory
  * Created by gaoyufei on 2017/6/8.
  */
 
-class DrawableFactory(val colorViewId:Int = 0,
+class DrawableFactory(val colorViewId:Int,
                                  val default:Drawable,
                                  val select:Drawable): DecorateFactory {
 

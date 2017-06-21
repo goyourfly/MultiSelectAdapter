@@ -18,7 +18,7 @@ class SimpleDeleteSelectAllMenuBar(activity: Activity, val color:Int, gravity:In
             }
             R.id.action_delete ->{
                 dismiss()
-                controller.done()
+                controller.delete()
             }
             R.id.action_all ->{
                 controller.selectAll()

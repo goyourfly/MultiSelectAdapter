@@ -18,7 +18,7 @@ class SimpleDeleteMenuBar(activity: Activity, val color:Int, gravity:Int = Gravi
             }
             R.id.action_delete ->{
                 dismiss()
-                controller.done()
+                controller.delete()
             }
         }
     }

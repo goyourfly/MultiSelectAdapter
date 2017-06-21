@@ -8,6 +8,7 @@ import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
 import com.goyourfly.multiple.adapter.viewholder.DecorateFactory
 import com.goyourfly.multiple.adapter.menu.MenuController
 import com.goyourfly.multiple.adapter.menu.MenuBar
+import java.util.*
 
 /**
  * Created by gaoyufei on 2017/6/8.
@@ -20,6 +21,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
                       val stateChangeListener: StateChangeListener?,
                       val popupToolbar: MenuBar?,
                       val ignoreType: Array<Int>?,
+                      val list: MutableList<in Any>?,
                       val decorateFactory: DecorateFactory,
                       val duration: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MenuController {
 
@@ -84,20 +86,24 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     override fun selectAll() {
-        for (i in 0..adapter.itemCount - 1){
-            selectIndex.put(i,true)
+        var count = 0
+        for (i in 0..itemCount - 1) {
+            if (!isIgnore(i)) {
+                selectIndex.put(i, true)
+                count ++
+            }
         }
-        selectNum = adapter.itemCount
-        popupToolbar?.onUpdateTitle(selectNum,getTotal())
+        selectNum = count
+        popupToolbar?.onUpdateTitle(selectNum, getTotal())
         notifyDataSetChanged()
     }
 
     override fun selectNothing() {
-        for (i in 0..adapter.itemCount - 1){
-            selectIndex.put(i,false)
+        for (i in 0..itemCount - 1) {
+            selectIndex.put(i, false)
         }
         selectNum = 0
-        popupToolbar?.onUpdateTitle(selectNum,getTotal())
+        popupToolbar?.onUpdateTitle(selectNum, getTotal())
         notifyDataSetChanged()
     }
 
@@ -113,7 +119,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
             return
         selectIndex.put(position, !selectIndex[position])
         selectNum += if (selectIndex[position]) 1 else -1
-        popupToolbar?.onUpdateTitle(selectNum,getTotal())
+        popupToolbar?.onUpdateTitle(selectNum, getTotal())
         if (selectIndex[position]) {
             stateChangeListener?.onSelect(position, selectNum)
         } else {
@@ -164,7 +170,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         selectNum = 1
         showState = ViewState.DEFAULT_TO_SELECT
         popupToolbar?.show()
-        popupToolbar?.onUpdateTitle(selectNum,getTotal())
+        popupToolbar?.onUpdateTitle(selectNum, getTotal())
         stateChangeListener?.onSelectMode()
         if (refresh)
             notifyDataSetChanged()
@@ -191,11 +197,17 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
             return
         showState = ViewState.SELECT_TO_DEFAULT
         popupToolbar?.dismiss()
-        if (refresh)
-            notifyDataSetChanged()
         handler.postDelayed(run, duration)
+
+        val select = getSelectIndex()
+        Collections.reverse(select)
+        for (index in select) {
+            list?.removeAt(index)
+        }
         stateChangeListener?.onDelete(getSelectIndex())
         selectIndex.clear()
+        if (refresh)
+            notifyDataSetChanged()
     }
 
     override fun getSelect(): ArrayList<Int> {
@@ -224,6 +236,40 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
         return list
+    }
+
+    fun setData(data: Any) {
+        if (list != null) {
+            list.clear()
+            list.add(data)
+        } else {
+            throw NullPointerException("Please call MultipleSelect.BindList before setData")
+        }
+    }
+
+    fun setData(data: List<Any>) {
+        if (list != null) {
+            list.clear()
+            list.addAll(data)
+        } else {
+            throw NullPointerException("Please call MultipleSelect.BindList before setData")
+        }
+    }
+
+    fun addData(data: Any) {
+        if (list != null) {
+            list.add(data)
+        } else {
+            throw NullPointerException("Please call MultipleSelect.BindList before addData")
+        }
+    }
+
+    fun addData(data: List<Any>) {
+        if (list != null) {
+            list.addAll(data)
+        } else {
+            throw NullPointerException("Please call MultipleSelect.BindList before addData")
+        }
     }
 
 

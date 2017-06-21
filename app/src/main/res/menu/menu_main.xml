@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_radio_btn_left"
+        android:title="Radio Button Left"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_radio_btn_right"
+        android:title="Radio Button Right"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_background_color"
+        android:title="Background color"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_check_box"
+        android:title="CheckBox"
+        app:showAsAction="never" />
+</menu>

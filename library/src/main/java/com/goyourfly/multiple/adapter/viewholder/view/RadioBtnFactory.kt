@@ -14,9 +14,13 @@ import com.goyourfly.multiple.adapter.R
  * Created by gaoyufei on 2017/6/11.
  */
 
-class RadioBtnFactory(val color: Int = Color.RED,
-                      val duration: Long = 300L,
-                      val gravity: Int = Gravity.LEFT) : CustomViewFactory() {
+class RadioBtnFactory(val color: Int,
+                      val duration:Int,
+                      val gravity:Int) : CustomViewFactory() {
+    constructor() : this(Color.RED, 300, Gravity.LEFT)
+    constructor(gravity: Int) : this(Color.RED, 300, gravity)
+    constructor(color:Int,gravity: Int) : this(color, 300, gravity)
+
     override fun onShowAnimation(itemView: View, selectView: View) {
         selectView.visibility = View.VISIBLE
 //        if(gravity == Gravity.LEFT

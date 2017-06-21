@@ -15,16 +15,16 @@ class DemoSectionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val TYPE_SECTION  = 1
     val TYPE_CONTENT  = 2
 
-    val list = arrayListOf<String>()
+    val list = mutableListOf<Data>()
 
     init {
         for (i in 0..100) {
-            addItem("i:$i")
+            addItem(Data("index:$i",if(i % 10 == 0) TYPE_SECTION else TYPE_CONTENT))
         }
     }
 
-    fun addItem(str: String) {
-        list.add(str)
+    fun addItem(data: Data) {
+        list.add(data)
     }
 
     fun removeItem(position: Int) {
@@ -34,7 +34,7 @@ class DemoSectionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder?, p1: Int) {
         if (getItemViewType(p1) == TYPE_CONTENT) {
             val holder = p0 as MyViewHolder
-            holder.position.text = list[p1]
+            holder.position.text = list[p1].str
         }
     }
 
@@ -51,12 +51,11 @@ class DemoSectionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position % 10 == 0){
-            return TYPE_SECTION
-        }
-        return TYPE_CONTENT
+        return list[position].type
     }
 
+
+    data class Data(val str: String,val type:Int)
 
     override fun getItemCount(): Int {
         return list.size

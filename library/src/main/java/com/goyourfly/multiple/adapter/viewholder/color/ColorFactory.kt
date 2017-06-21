@@ -10,9 +10,11 @@ import com.goyourfly.multiple.adapter.viewholder.DecorateFactory
  * Created by gaoyufei on 2017/6/8.
  */
 
-class ColorFactory(val colorViewId:Int = 0,
-                   val defaultColor:Int = Color.TRANSPARENT,
-                   val selectColor:Int = Color.LTGRAY): DecorateFactory {
+class ColorFactory(val colorViewId:Int,
+                   val defaultColor:Int,
+                   val selectColor:Int): DecorateFactory {
+
+    constructor() : this(0,Color.TRANSPARENT,Color.LTGRAY)
 
     override fun decorate(viewHolder: RecyclerView.ViewHolder, adapter: MultipleAdapter): BaseViewHolder {
         return ColorViewHolder(viewHolder.itemView,viewHolder,adapter,colorViewId,defaultColor,selectColor)
