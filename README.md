@@ -37,7 +37,7 @@ Step 2. Add the dependency
 
 ````
 dependencies {
-    compile 'com.github.goyourfly:MultiSelectAdapter:3.2'
+    compile 'com.github.goyourfly:MultiSelectAdapter:3.4'
 }
 ````
 
@@ -49,6 +49,7 @@ dependencies {
                 .with(Activity)
                 .adapter(YourAdapter)
                 .ignoreViewType(ItemViewType)
+                .linkList(YourAdapter.list)
                 .stateChangeListener(StateChangeListener)
                 .decorateFactory(? extends DecorateFactory)
                 .customMenu(? extends MenuBar)
@@ -60,6 +61,7 @@ dependencies {
 | with | Activity | 是 | 显示RecycleView的Activity |
 | adapter | RecyclerView.Adapter | 是 | 你的Adapter |
 | ignoreViewType | Integer[] | 否 | 需要忽略的Item类型，比如Section，Header，Footer等 |
+| linkList | List<Object> | 否 | 绑定你的Adapter的地址，这样在调用MultipleAdapter.delete()接口的时候就会自动删除数据 |
 | stateChangeListener | StateChangeListener | 否 | 选择模式时候的一些消息回调 |
 | decorateFactory | ? extends DecorateFactory | 否 | 选择模式时Item的样式创建类，可以自定义，具体样式参考上面Demo，底下会详细介绍 |
 | customMenu | ? extends MenuBar | 否 | 选择模式的Menu，默认提供几种方式，可以简单的自定义和完全的自定义 |
