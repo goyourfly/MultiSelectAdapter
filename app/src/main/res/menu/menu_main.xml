@@ -19,4 +19,8 @@
         android:id="@+id/action_check_box"
         android:title="CheckBox"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_more"
+        android:title="More"
+        app:showAsAction="never" />
 </menu>

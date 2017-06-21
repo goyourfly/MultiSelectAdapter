@@ -177,7 +177,8 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     override fun getTotal(): Int {
-        return itemCount
+        val count = (0 until itemCount).count { !isIgnore(it) }
+        return count
     }
 
     override fun done(refresh: Boolean) {

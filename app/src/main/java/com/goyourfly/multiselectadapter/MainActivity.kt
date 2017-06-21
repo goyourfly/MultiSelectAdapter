@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import com.goyourfly.multiple.adapter.MultipleAdapter
 import com.goyourfly.multiple.adapter.MultipleSelect
 import com.goyourfly.multiple.adapter.menu.SimpleDeleteSelectAllMenuBar
 import com.goyourfly.multiple.adapter.viewholder.color.ColorFactory
@@ -81,8 +82,17 @@ class MainActivity : AppCompatActivity() {
                         .customMenu(SimpleDeleteSelectAllMenuBar(this, resources.getColor(R.color.colorPrimary)))
                         .build()
             }
+            R.id.action_more -> {
+                startActivity(Intent(this,MoreActivity::class.java))
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if(!(recycler.adapter as MultipleAdapter).cancel()){
+            super.onBackPressed()
+        }
     }
 
 }

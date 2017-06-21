@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="com.goyourfly.multiselectadapter.MainActivity">
+
+    <Button
+        android:id="@+id/demo_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DEMO1" />
+
+    <Button
+        android:id="@+id/demo_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DEMO2" />
+
+    <Button
+        android:id="@+id/demo_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DEMO3" />
+
+    <Button
+        android:id="@+id/demo_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DEMO4" />
+
+    <Button
+        android:id="@+id/demo_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DEMO5" />
+    <Button
+        android:id="@+id/demo_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DEMO6" />
+
+</LinearLayout>
