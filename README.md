@@ -37,7 +37,7 @@ Step 2. Add the dependency
 
 ````
 dependencies {
-    compile 'com.github.goyourfly:MultiSelectAdapter:3.5'
+    compile 'com.github.goyourfly:MultiSelectAdapter:3.6'
 }
 ````
 
