@@ -47,5 +47,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="DEMO6" />
+    <Button
+        android:id="@+id/demo_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DEMO7" />
 
 </LinearLayout>

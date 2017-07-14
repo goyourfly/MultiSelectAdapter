@@ -33,6 +33,9 @@ class MoreActivity : AppCompatActivity() {
         findViewById(R.id.demo_6).setOnClickListener {
             startActivity(Intent(it.context, Demo6Activity::class.java))
         }
+        findViewById(R.id.demo_7).setOnClickListener {
+            startActivity(Intent(it.context, Demo7Activity::class.java))
+        }
     }
 
 }

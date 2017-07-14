@@ -22,6 +22,7 @@
         <activity android:name=".more.Demo4Activity" />
         <activity android:name=".more.Demo5Activity" />
         <activity android:name=".more.Demo6Activity" />
+        <activity android:name=".more.Demo7Activity" />
         <activity android:name=".MoreActivity" />
     </application>
 

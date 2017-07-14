@@ -29,6 +29,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
     val selectIndex = SparseBooleanArray()
     var selectNum = 0
     var handler = Handler()
+    var recyclerView:RecyclerView? = null
 
     init {
         popupToolbar?.initControl(this)
@@ -47,9 +48,11 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
             adapter.onBindViewHolder(viewHolder, position)
             return
         }
+        injectRecyclerView(viewHolder.viewHolder)
         /**
          * 先调用外界的绑定ViewHolder
          */
+        adapter.bindViewHolder(viewHolder.viewHolder,position)
         adapter.onBindViewHolder(viewHolder.viewHolder, position)
         /**
          * 如果被忽略，则不往下走
@@ -64,6 +67,19 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         viewHolder.showStateChanged(showState)
+    }
+
+    fun injectRecyclerView(childHolder:RecyclerView.ViewHolder){
+        try {
+            val child = RecyclerView.ViewHolder::class
+            if(recyclerView != null) {
+                val mOwnerRecyclerView = child.java.getDeclaredField("mOwnerRecyclerView")
+                mOwnerRecyclerView.isAccessible = true
+                mOwnerRecyclerView.set(childHolder, recyclerView)
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): RecyclerView.ViewHolder {
@@ -279,7 +295,7 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         adapter.setHasStableIds(hasStableIds)
     }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         super.onViewRecycled(holder)
         adapter.onViewRecycled(holder)
     }
@@ -289,13 +305,15 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         return adapter.onFailedToRecycleView(holder)
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         adapter.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         adapter.onDetachedFromRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
     }
 }
