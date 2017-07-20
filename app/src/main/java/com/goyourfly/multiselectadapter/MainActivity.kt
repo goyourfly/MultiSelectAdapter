@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                         .with(this)
                         .adapter(demoAdapter)
                         .decorateFactory(CheckBoxFactory(color = resources.getColor(R.color.colorPrimary)))
+                        .ignoreViewType(arrayOf(demoAdapter.TYPE_SECTION))
                         .linkList(demoAdapter.list)
                         .customMenu(SimpleDeleteSelectAllMenuBar(this, resources.getColor(R.color.colorPrimary)))
                         .build()

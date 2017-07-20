@@ -2,21 +2,32 @@ package com.goyourfly.multiple.adapter.viewholder
 
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import com.goyourfly.multiple.adapter.MultipleAdapter
 import com.goyourfly.multiple.adapter.ViewState
 
 /**
  * Created by gaoyufei on 2017/6/8.
  */
-abstract class BaseViewHolder(val view: View,
+abstract class BaseViewHolder(val root: View,
                               val viewHolder: RecyclerView.ViewHolder,
-                              val adapter: MultipleAdapter) : RecyclerView.ViewHolder(view) {
+                              val adapter: MultipleAdapter) : RecyclerView.ViewHolder(InterceptFrameLayout(root.context,adapter,root)) {
 
     val onTouchListener = OnTouchListener(adapter,this)
     init {
-        viewHolder.itemView.setOnTouchListener(onTouchListener)
+//        viewHolder.itemView.setOnTouchListener(onTouchListener)
+        if(itemView is InterceptFrameLayout){
+            itemView.setLongClickCallback {
+                Log.d("...","onLongClickCallback")
+                adapter.onItemLongClick(viewHolder.adapterPosition)
+            }
+            itemView.setSelectStateClickCallback {
+                adapter.onItemClick(viewHolder.adapterPosition)
+            }
+        }
     }
 
     abstract fun selectStateChanged(state: Int)

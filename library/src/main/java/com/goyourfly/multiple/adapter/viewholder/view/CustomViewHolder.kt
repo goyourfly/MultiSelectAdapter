@@ -12,13 +12,13 @@ import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
 /**
  * Created by gaoyufei on 2017/6/8.
  */
-class CustomViewHolder(view: View,
+class CustomViewHolder(root: View,
                        viewHolder: RecyclerView.ViewHolder,
                        adapter: MultipleAdapter,
                        val animationInterface: AnimationInterface,
                        val selectViewContainer: View,
                        val selectView: View,
-                       val unSelectView: View) : BaseViewHolder(view, viewHolder, adapter) {
+                       val unSelectView: View) : BaseViewHolder(root, viewHolder, adapter) {
     init {
         selectView.setOnTouchListener(onTouchListener)
         unSelectView.setOnTouchListener(onTouchListener)
