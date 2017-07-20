@@ -13,7 +13,7 @@ import com.goyourfly.multiple.adapter.ViewState
  * Created by gaoyufei on 2017/7/20.
  */
 
-class InterceptFrameLayout(context: Context, val adapter: MultipleAdapter, child: View) : FrameLayout(context) {
+internal class InterceptFrameLayout(context: Context, val adapter: MultipleAdapter, child: View) : FrameLayout(context) {
     val CLICK_ACTION_THRESHHOLD = 20
     val CLICK_LONG_TIME = 500L
 
