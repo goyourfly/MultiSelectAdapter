@@ -154,17 +154,17 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
     fun onItemLongClick(position: Int): Boolean {
         if (isIgnore(position))
             return false
-        selectIndex.clear()
         if (showState == ViewState.DEFAULT) {
             selectMode(false)
             selectIndex.put(position, true)
+            selectNum = 1
             stateChangeListener?.onSelect(position, selectNum)
+            popupToolbar?.onUpdateTitle(selectNum, getTotal())
         } else if (showState == ViewState.SELECT) {
             selectNum = 0
-            cancel()
+            cancel(false)
         }
         notifyDataSetChanged()
-        handler.postDelayed(run, duration)
         return true
     }
 
@@ -183,13 +183,14 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     override fun selectMode(refresh: Boolean) {
-        selectNum = 1
+        selectIndex.clear()
         showState = ViewState.DEFAULT_TO_SELECT
         popupToolbar?.show()
         popupToolbar?.onUpdateTitle(selectNum, getTotal())
-        stateChangeListener?.onSelectMode()
         if (refresh)
             notifyDataSetChanged()
+        stateChangeListener?.onSelectMode()
+        handler.postDelayed(run, duration)
     }
 
     override fun getTotal(): Int {
