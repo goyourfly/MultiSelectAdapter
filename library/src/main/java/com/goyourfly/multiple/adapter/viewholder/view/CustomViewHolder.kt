@@ -19,10 +19,10 @@ class CustomViewHolder(root: View,
                        val selectViewContainer: View,
                        val selectView: View,
                        val unSelectView: View) : BaseViewHolder(root, viewHolder, adapter) {
-    init {
-        selectView.setOnTouchListener(onTouchListener)
-        unSelectView.setOnTouchListener(onTouchListener)
-    }
+//    init {
+//        selectView.setOnTouchListener(onTouchListener)
+//        unSelectView.setOnTouchListener(onTouchListener)
+//    }
 
 
     override fun selectStateChanged(state: Int) {
@@ -51,6 +51,7 @@ class CustomViewHolder(root: View,
             }
         }
     }
+
 
 
     fun Float.toPx(context: android.content.Context): Int {

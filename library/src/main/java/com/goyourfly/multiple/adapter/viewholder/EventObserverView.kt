@@ -2,20 +2,21 @@ package com.goyourfly.multiple.adapter.viewholder
 
 import android.content.Context
 import android.support.v4.view.MotionEventCompat
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import com.goyourfly.multiple.adapter.MultipleAdapter
 import com.goyourfly.multiple.adapter.ViewState
 
 /**
  * Created by gaoyufei on 2017/7/20.
+ * 用于检测和拦截长按手势的ViewGroup
  */
 
-internal class InterceptFrameLayout(context: Context, val adapter: MultipleAdapter, child: View) : FrameLayout(context) {
-    val CLICK_ACTION_THRESHHOLD = 20
-    val CLICK_LONG_TIME = 500L
+internal class EventObserverView(context: Context, val adapter: MultipleAdapter, child: View) : FrameLayout(context) {
+    val CLICK_ACTION_THRESHHOLD = ViewConfiguration.get(context).getScaledTouchSlop()
+    val CLICK_LONG_TIME = ViewConfiguration.getLongPressTimeout().toLong()
 
     var startX = 0F
     var startY = 0F
@@ -23,24 +24,14 @@ internal class InterceptFrameLayout(context: Context, val adapter: MultipleAdapt
     var moveY = 0F
     var downTime = 0L
     var isTouching = false
-    var isLongClick = false
-    var touchDownTime = 0L
+    var mHasPerformedLongPress = false;
 
     private var onLongClicked: (() -> Unit)? = null
     private var onClick: (() -> Unit)? = null
 
     val run = Runnable {
-        if (isTouching && !isLongClick && isAClick()) {
-            // 制作一个假的事件
-            val event = MotionEvent.obtain(
-                    downTime,
-                    System.currentTimeMillis(),
-                    MotionEvent.ACTION_MOVE,
-                    moveX,
-                    moveY,
-                    0)
-            isLongClick = true
-            onTouchEvent(event)
+        if (isTouching && !mHasPerformedLongPress && isAClick()) {
+            onLongClick()
         }
     }
 
@@ -55,19 +46,20 @@ internal class InterceptFrameLayout(context: Context, val adapter: MultipleAdapt
         addView(child)
     }
 
+
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
-        Log.d("...", "onIntercept:$ev")
         val action = MotionEventCompat.getActionMasked(ev)
+        var isLongClick = false
         when (action) {
             MotionEvent.ACTION_DOWN -> {
-                isLongClick = false
+                mHasPerformedLongPress = false
                 isTouching = true
                 startX = ev.x
                 startY = ev.y
                 moveX = ev.x
                 moveY = ev.y
                 downTime = System.currentTimeMillis()
-                handler.postDelayed(run, CLICK_LONG_TIME)
+                postDelayed(run, CLICK_LONG_TIME)
             }
             MotionEvent.ACTION_MOVE -> {
                 moveX = ev.x
@@ -78,50 +70,47 @@ internal class InterceptFrameLayout(context: Context, val adapter: MultipleAdapt
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isTouching = false
-                handler.removeCallbacks(run)
+                removeCallbacks(run)
             }
         }
         return isLongClick || adapter.showState == ViewState.SELECT
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        return super.dispatchTouchEvent(ev)
+    }
+
+    fun onLongClick() {
+        removeCallbacks(run)
+        post {
+            mHasPerformedLongPress = true
+            onLongClicked?.invoke()
+        }
+    }
 
     override fun onTouchEvent(ev: MotionEvent): Boolean {
         val action = MotionEventCompat.getActionMasked(ev)
-        Log.d("...", "onTouch:$ev")
-        if (isTouching
-                && isLongClick
-                && action != MotionEvent.ACTION_CANCEL) {
-            handler.removeCallbacks(run)
-            handler.post {
-                onLongClicked?.invoke()
-            }
-            return true
-        }
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 isTouching = true
+                mHasPerformedLongPress = false
                 startX = ev.x
                 startY = ev.y
                 moveX = ev.x
                 moveY = ev.y
-                touchDownTime = System.currentTimeMillis()
             }
             MotionEvent.ACTION_MOVE -> {
                 moveX = ev.x
                 moveY = ev.y
             }
-            MotionEvent.ACTION_UP -> {
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isTouching = false
-                handler.removeCallbacks(run)
-                if (adapter.showState == ViewState.SELECT
-                        && !isTouchLong()
+                removeCallbacks(run)
+                if (action == MotionEvent.ACTION_UP
+                        && adapter.showState == ViewState.SELECT
                         && isAClick()) {
                     onClick?.invoke()
                 }
-            }
-            MotionEvent.ACTION_CANCEL -> {
-                isTouching = false
-                handler.removeCallbacks(run)
             }
         }
         return true
@@ -137,7 +126,6 @@ internal class InterceptFrameLayout(context: Context, val adapter: MultipleAdapt
     }
 
     private fun isInterceptLong() = System.currentTimeMillis() - downTime > CLICK_LONG_TIME
-    private fun isTouchLong() = System.currentTimeMillis() - touchDownTime > CLICK_LONG_TIME
 
     private fun isAClick(): Boolean {
         val differenceX = Math.abs(startX - moveX)

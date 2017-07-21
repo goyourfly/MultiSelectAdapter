@@ -82,10 +82,11 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): RecyclerView.ViewHolder {
-        val outerHolder = adapter.onCreateViewHolder(viewGroup, position)
-        if (isIgnore(position))
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val outerHolder = adapter.onCreateViewHolder(viewGroup, viewType)
+        if(ignoreType != null && ignoreType.contains(viewType)){
             return outerHolder
+        }
         return decorateFactory.decorate(outerHolder, this)
     }
 
@@ -172,7 +173,8 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
      * 判断这个类型是否被忽略
      */
     fun isIgnore(position: Int): Boolean {
-        if (ignoreType == null)
+        if (ignoreType == null
+                || ignoreType.isEmpty())
             return false
         val type = getItemViewType(position)
         return ignoreType.contains(type)
