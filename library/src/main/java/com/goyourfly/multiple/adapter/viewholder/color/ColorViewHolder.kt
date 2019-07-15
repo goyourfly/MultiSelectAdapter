@@ -1,10 +1,12 @@
 package com.goyourfly.multiple.adapter.viewholder.color
 
+import androidx.recyclerview.widget.RecyclerView
+
 /**
  * Created by gaoyufei on 2017/6/8.
  */
 class ColorViewHolder(view: android.view.View,
-                      viewHolder: android.support.v7.widget.RecyclerView.ViewHolder,
+                      viewHolder: RecyclerView.ViewHolder,
                       adapter: com.goyourfly.multiple.adapter.MultipleAdapter,
                       val colorViewId: Int,
                       val defaultColor: Int,

@@ -1,7 +1,7 @@
 package com.goyourfly.multiple.adapter
 
 import android.app.Activity
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.goyourfly.multiple.adapter.viewholder.DecorateFactory
 import com.goyourfly.multiple.adapter.viewholder.view.RadioBtnFactory
 import com.goyourfly.multiple.adapter.menu.SimpleDoneMenuBar

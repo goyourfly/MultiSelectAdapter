@@ -1,7 +1,7 @@
 package com.goyourfly.multiple.adapter
 
 import android.os.Handler
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.ViewGroup
 import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
@@ -219,12 +219,13 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         popupToolbar?.dismiss()
         handler.postDelayed(run, duration)
 
+        // 先回调在删除
+        stateChangeListener?.onDelete(getSelectIndex())
         val select = getSelectIndex()
         Collections.reverse(select)
         for (index in select) {
             list?.removeAt(index)
         }
-        stateChangeListener?.onDelete(getSelectIndex())
         selectIndex.clear()
         if (refresh)
             notifyDataSetChanged()
@@ -303,19 +304,16 @@ class MultipleAdapter(val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
         adapter.onViewRecycled(holder)
     }
 
-    override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder?): Boolean {
-        super.onFailedToRecycleView(holder)
+    override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder): Boolean {
         return adapter.onFailedToRecycleView(holder)
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
         adapter.onAttachedToRecyclerView(recyclerView)
         this.recyclerView = recyclerView
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
         adapter.onDetachedFromRecyclerView(recyclerView)
         this.recyclerView = recyclerView
     }

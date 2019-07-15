@@ -1,11 +1,11 @@
 package com.goyourfly.multiple.adapter.viewholder
 
 import android.content.Context
-import android.support.v4.view.MotionEventCompat
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.widget.FrameLayout
+import androidx.core.view.MotionEventCompat
 import com.goyourfly.multiple.adapter.MultipleAdapter
 import com.goyourfly.multiple.adapter.ViewState
 

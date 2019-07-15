@@ -8,7 +8,7 @@ import com.goyourfly.multiple.adapter.viewholder.BaseViewHolder
  * Created by gaoyufei on 2017/6/8.
  */
 class DrawableViewHolder(view: android.view.View,
-                            viewHolder: android.support.v7.widget.RecyclerView.ViewHolder,
+                            viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
                             adapter: com.goyourfly.multiple.adapter.MultipleAdapter,
                             val targetId: Int,
                             val normal: Drawable,

@@ -2,9 +2,9 @@ package com.goyourfly.multiple.adapter.menu
 
 import android.app.Activity
 import android.graphics.Color
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import com.goyourfly.multiple.adapter.R
 
 /**

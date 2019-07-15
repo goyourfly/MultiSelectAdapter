@@ -13,7 +13,7 @@ import viewholder.view.CustomViewHolder
  */
 abstract class CustomViewFactory : com.goyourfly.multiple.adapter.viewholder.DecorateFactory, com.goyourfly.multiple.adapter.viewholder.AnimationInterface {
 
-    override fun decorate(viewHolder: android.support.v7.widget.RecyclerView.ViewHolder, adapter: com.goyourfly.multiple.adapter.MultipleAdapter): com.goyourfly.multiple.adapter.viewholder.BaseViewHolder {
+    override fun decorate(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, adapter: com.goyourfly.multiple.adapter.MultipleAdapter): com.goyourfly.multiple.adapter.viewholder.BaseViewHolder {
         val context = viewHolder.itemView.context
         val root = onCreateRootView(context)
         val rootParams = ViewGroup.LayoutParams(viewHolder.itemView.layoutParams)
@@ -24,7 +24,7 @@ abstract class CustomViewFactory : com.goyourfly.multiple.adapter.viewholder.Dec
 
     fun createViewHolder(context: android.content.Context,
                          root: android.view.ViewGroup,
-                         viewHolder: android.support.v7.widget.RecyclerView.ViewHolder,
+                         viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
                          adapter: com.goyourfly.multiple.adapter.MultipleAdapter): BaseViewHolder {
         val selectView = onCreateSelectView(context)
         val defaultView = onCreateNormalView(context)

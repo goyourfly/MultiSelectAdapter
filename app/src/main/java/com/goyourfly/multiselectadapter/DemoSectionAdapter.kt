@@ -1,6 +1,6 @@
 package com.goyourfly.multiselectadapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -31,9 +31,9 @@ class DemoSectionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         list.removeAt(position)
     }
 
-    override fun onBindViewHolder(p0: RecyclerView.ViewHolder?, p1: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, p1: Int) {
         if (getItemViewType(p1) == TYPE_CONTENT) {
-            val holder = p0 as MyViewHolder
+            val holder = holder as MyViewHolder
             holder.position.text = list[p1].str
         }
     }
@@ -73,7 +73,7 @@ class DemoSectionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             view.setOnClickListener {
                 Toast.makeText(view.context, "Hello", Toast.LENGTH_SHORT).show()
             }
-            view.findViewById(R.id.image_star)
+            view.findViewById<View>(R.id.image_star)
                     .setOnClickListener {
                         Toast.makeText(view.context, "Star", Toast.LENGTH_SHORT).show()
                     }
